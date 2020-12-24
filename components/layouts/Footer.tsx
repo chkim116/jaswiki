@@ -5,7 +5,7 @@ import Link from "next/link";
 const FooterContainer = styled.footer`
     width: 100%;
     background-color: #303740;
-    min-height: 250px;
+    min-height: 180px;
     display: flex;
     justify-content: center;
     align-items: center;
