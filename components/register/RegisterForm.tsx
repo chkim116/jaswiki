@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
-const Container = styled.div`
+export const SignContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,7 +16,7 @@ const Container = styled.div`
     }
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
     display: flex;
     flex-direction: column;
 
@@ -46,7 +46,7 @@ const Form = styled.form`
 
 const RegisterForm = () => {
     return (
-        <Container>
+        <SignContainer>
             <div>
                 <h1>
                     회원가입을 하면🤝 <br />
@@ -63,7 +63,7 @@ const RegisterForm = () => {
             <Link href="/login">
                 <a>로그인하기</a>
             </Link>
-        </Container>
+        </SignContainer>
     );
 };
 

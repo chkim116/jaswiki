@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { SiJavascript } from "react-icons/si";
-import { Input } from "antd";
+import { Button, Input } from "antd";
 import { Avatar, Badge } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -34,6 +34,12 @@ const List = styled.div`
 const UserBadge = styled.div`
     cursor: pointer;
     position: relative;
+    display: flex;
+    align-items: center;
+
+    button {
+        margin-right: 8px;
+    }
     ul {
         padding: 0;
         margin: 0;
@@ -53,9 +59,11 @@ const UserBadge = styled.div`
         }
     }
 
-    &:hover {
-        ul {
-            display: block;
+    span {
+        &:hover {
+            ul {
+                display: block;
+            }
         }
     }
 `;
@@ -65,9 +73,15 @@ const Nav = () => {
         <Container>
             <Navigation>
                 <List>
-                    <div>
-                        <SiJavascript size={54} fill="#FBE574" />
-                    </div>
+                    <Link href="/">
+                        <div>
+                            <SiJavascript
+                                size={54}
+                                style={{ cursor: "pointer" }}
+                                fill="#FBE574"
+                            />
+                        </div>
+                    </Link>
                     <div>
                         <Input.Search
                             size="large"
@@ -77,6 +91,9 @@ const Nav = () => {
                     </div>
 
                     <UserBadge>
+                        <Link href="/write">
+                            <Button type="primary">문서작성</Button>
+                        </Link>
                         <Badge count={0}>
                             <Avatar shape="square" icon={<UserOutlined />} />
                             <ul>
