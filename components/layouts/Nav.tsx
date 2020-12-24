@@ -4,6 +4,7 @@ import { SiJavascript } from "react-icons/si";
 import { Input } from "antd";
 import { Avatar, Badge } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import Link from "next/link";
 
 const Container = styled.div`
     width: 100%;
@@ -79,8 +80,12 @@ const Nav = () => {
                         <Badge count={0}>
                             <Avatar shape="square" icon={<UserOutlined />} />
                             <ul>
-                                <li>계정 생성</li>
-                                <li>로그인</li>
+                                <Link href="/register">
+                                    <li>계정 생성</li>
+                                </Link>
+                                <Link href="/login">
+                                    <li>로그인</li>
+                                </Link>
                             </ul>
                         </Badge>
                     </UserBadge>

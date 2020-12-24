@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import Link from "next/link";
 
 const FooterContainer = styled.footer`
     width: 100%;
@@ -36,8 +37,12 @@ const Footer = () => {
         <FooterContainer>
             <FooterInfo>
                 <div>
-                    <div>사용 설명서 |</div>
-                    <div>자스위키에 대해</div>
+                    <Link href="/tutorial">
+                        <div>사용 설명서 |</div>
+                    </Link>
+                    <Link href="/about">
+                        <div>자스위키에 대해</div>
+                    </Link>
                 </div>
                 <div>&copy; JaSwiki 2020</div>
             </FooterInfo>
