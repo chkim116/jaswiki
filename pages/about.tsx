@@ -1,7 +1,8 @@
 import React from "react";
+import AboutForm from "../components/About/AboutForm";
 
 const about = () => {
-    return <div>자스위키에 관하여..</div>;
+    return <AboutForm></AboutForm>;
 };
 
 export default about;

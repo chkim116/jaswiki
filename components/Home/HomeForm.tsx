@@ -1,116 +1,138 @@
 import React from "react";
+import { Button, Result } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
+import {
+    SiJavascript,
+    SiReact,
+    SiJquery,
+    SiCss3,
+    SiHtml5,
+    SiNextDotJs,
+    SiNodeDotJs,
+    SiTypescript,
+} from "react-icons/si";
 import styled from "@emotion/styled";
-import { Anchor } from "antd";
-const { Link } = Anchor;
+import { DetailTitle, Title } from "../../styles/commonStyles";
+import Link from "next/link";
 
-const Cotainer = styled.div`
-    min-height: 100vh;
+const Container = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
+    width: 100%;
     margin: 0 auto;
+    min-height: 100vh;
     @media all and (max-width: ${(props) => props.theme.desktop}) {
         padding: 5px;
     }
 `;
 
-const Title = styled.h1`
-    margin: 20px 0;
-    padding-bottom: 12px;
-    border-bottom: 2px solid ${(props) => props.theme.darkWhite};
-`;
-
-const Content = styled.div``;
-
-const ContentDesc = styled.div`
+const Stack = styled.div`
     display: flex;
-    justify-content: space-between;
-    @media all and (max-width: ${(props) => props.theme.desktop}) {
-        flex-direction: column;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    svg {
+        margin: 0 6px;
     }
 `;
 
-const BookAnchor = styled(Anchor)`
-    min-width: 300px;
-    max-width: 300px;
-    padding-bottom: 36px;
-    @media all and (max-width: ${(props) => props.theme.desktop}) {
-        margin: 0 auto;
+const NewFeed = styled.ul`
+    background: #fafbfc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    li {
+        margin: 5px 0;
+        width: fit-content;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
     }
 `;
 
-const LinkTitle = styled.div`
-    background: ${(props) => props.theme.green};
-    text-align: center;
-    padding: 6px 0;
-    font-size: ${(props) => props.theme.ls};
-    color: ${(props) => props.theme.white};
-`;
-
-const ContentDetail = styled.div`
+const Community = styled.div`
+    display: flex;
+    align-items: center;
     width: 100%;
-    margin-top: 40px;
-    min-height: 300px;
-`;
-
-const ContentDetailTitle = styled.h1`
-    position: relative;
-    padding-bottom: 12px;
-    &:after {
-        width: 30px;
-        height: 1px;
-        content: "";
-        position: absolute;
-        bottom: 0px;
-        left: 0;
-        border-bottom: 2px solid ${(props) => props.theme.darkWhite};
+    background: #fafbfc;
+    padding: 8px 10px;
+    div:nth-of-type(1) {
+        width: 120px;
+    }
+    div:nth-of-type(2) {
+        margin: 0 9px;
+        cursor: pointer;
+        flex: 2;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    div:nth-of-type(3) {
     }
 `;
 
 const HomeForm = () => {
     return (
-        <Cotainer>
+        <Container>
             <div>
-                <Title>자스위키</Title>
-            </div>
-            <Content>
-                <ContentDesc>
-                    <p>
-                        자스위키는 ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.자스위키는
-                        ~~합니다.자스위키는 ~~합니다.
-                    </p>
-                    <BookAnchor affix={false}>
-                        <LinkTitle>목차</LinkTitle>
-                        <Link href="#개요" title="개요" />
-                        <Link href="#연습" title="연습" />
-                        <Link href="#응용" title="응용">
-                            <Link href="#Link-Props" title="Link Props" />
+                <Result
+                    icon={<SmileOutlined />}
+                    title="반갑습니다 어서오세요! 이곳은 자스위키입니다."
+                    subTitle="이곳은 자바스크립트 개발자들이 직접 참여해 코드의 실제 예를 올리고 공유하는 곳입니다."
+                    extra={
+                        <Link href="/about">
+                            <Button type="primary">What is JaSwiki?</Button>
                         </Link>
-                        <Link href="#참고" title="참고"></Link>
-                    </BookAnchor>
-                </ContentDesc>
+                    }
+                />
+            </div>
+            <Stack>
+                <div>
+                    <SiJavascript size={42} fill="#F7DF1E" />
+                    <SiReact size={42} fill="#08D9FF" />
+                    <SiNextDotJs size={42} fill="#000000" />
+                    <SiNodeDotJs size={42} fill="#9EC879" />
+                    <SiTypescript size={42} fill="#007ACC" />
+                </div>
 
-                <ContentDetail>
-                    <ContentDetailTitle id="개요">1. 개요</ContentDetailTitle>
-                </ContentDetail>
-                <ContentDetail>
-                    <ContentDetailTitle id="연습">2. 연습</ContentDetailTitle>
-                </ContentDetail>
-                <ContentDetail>
-                    <ContentDetailTitle id="응용">3. 응용</ContentDetailTitle>
-                </ContentDetail>
-                <ContentDetail>
-                    <ContentDetailTitle id="참고">4. 참고</ContentDetailTitle>
-                </ContentDetail>
-            </Content>
-        </Cotainer>
+                <div>
+                    <SiHtml5 size={42} fill="#E44F26" />
+                    <SiCss3 size={42} fill="#007ACC" />
+                    <SiJquery size={42} fill="#F7DF1E" />
+                </div>
+            </Stack>
+            <Title>최근 등록 문서</Title>
+            <NewFeed>
+                <Link href="/">
+                    <li>글 1</li>
+                </Link>
+                <Link href="/">
+                    <li>글 1</li>
+                </Link>
+                <Link href="/">
+                    <li>글 1</li>
+                </Link>
+                <Link href="/">
+                    <li>글 1</li>
+                </Link>
+                <Link href="/">
+                    <li>글 1</li>
+                </Link>
+                <Link href="/">
+                    <li>글 1</li>
+                </Link>
+                <Link href="/">
+                    <li>글 1</li>
+                </Link>
+            </NewFeed>
+            <DetailTitle>한줄잡담</DetailTitle>
+            <Community>
+                <div>이름</div>
+                <Link href="">
+                    <div>잡담내용</div>
+                </Link>
+                <div>날짜</div>
+            </Community>
+        </Container>
     );
 };
 

@@ -4,7 +4,7 @@ import withReduxSaga from "next-redux-saga";
 import "../styles/global.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "../styles/theme";
-import { Container } from "../styles/commonStyles";
+import { Wrapper } from "../styles/commonStyles";
 import Nav from "../components/layouts/Nav";
 import Footer from "../components/layouts/Footer";
 import { useRouter } from "next/dist/client/router";
@@ -15,12 +15,12 @@ const App = ({ Component }) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container>
+            <Wrapper>
                 <Nav />
                 <Component />
                 {router.asPath === "/register" ||
                     router.asPath === "/login" || <Footer />}
-            </Container>
+            </Wrapper>
         </ThemeProvider>
     );
 };
