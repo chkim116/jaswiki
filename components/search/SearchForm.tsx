@@ -49,7 +49,7 @@ const SearchContent = styled.div`
 `;
 
 type Props = {
-    searchText: string | string[];
+    searchText: string | string[] | undefined;
     loading: boolean;
 };
 
