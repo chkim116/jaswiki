@@ -5,6 +5,7 @@ const theme = {
     green: "#1dc078",
     darkWhite: "#dbdbdb",
     blue: "#1DA1F2",
+    link: "#3d7e9a",
     ss: "12px",
     ms: "14px",
     ls: "18px",

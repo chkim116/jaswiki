@@ -68,7 +68,17 @@ const UserBadge = styled.div`
     }
 `;
 
-const Nav = () => {
+type Props = {
+    onSearch: (
+        value: string,
+        event?:
+            | React.ChangeEvent<HTMLInputElement>
+            | React.MouseEvent<HTMLElement, MouseEvent>
+            | React.KeyboardEvent<HTMLInputElement>
+    ) => void;
+};
+
+const Nav = ({ onSearch }: Props) => {
     return (
         <Container>
             <Navigation>
@@ -84,6 +94,7 @@ const Nav = () => {
                     </Link>
                     <div>
                         <Input.Search
+                            onSearch={onSearch}
                             size="large"
                             placeholder="검색하세요"
                             enterButton

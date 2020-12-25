@@ -4,7 +4,7 @@ import { Anchor } from "antd";
 import { DetailTitle, Title } from "../../styles/commonStyles";
 const { Link } = Anchor;
 
-const Cotainer = styled.div`
+const AboutCotainer = styled.div`
     min-height: 100vh;
     max-width: ${(props) => props.theme.maxWidth};
     margin: 0 auto;
@@ -48,7 +48,7 @@ const ContentDetail = styled.div`
 
 const AboutForm = () => {
     return (
-        <Cotainer>
+        <AboutCotainer>
             <div>
                 <Title>자스위키</Title>
             </div>
@@ -91,7 +91,7 @@ const AboutForm = () => {
                     <DetailTitle id="참고">4. 참고</DetailTitle>
                 </ContentDetail>
             </Content>
-        </Cotainer>
+        </AboutCotainer>
     );
 };
 

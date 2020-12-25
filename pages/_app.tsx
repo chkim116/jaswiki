@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import wrapper from "../store/configureStore";
 import withReduxSaga from "next-redux-saga";
 import "../styles/global.css";
@@ -13,10 +13,14 @@ import { useRouter } from "next/dist/client/router";
 const App = ({ Component }) => {
     const router = useRouter();
 
+    const onSearch = useCallback((v, e) => {
+        router.push(`/search?q=${v}`);
+    }, []);
+
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
-                <Nav />
+                <Nav onSearch={onSearch} />
                 <Component />
                 {router.asPath === "/register" ||
                     router.asPath === "/login" || <Footer />}

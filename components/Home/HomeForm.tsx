@@ -15,7 +15,7 @@ import styled from "@emotion/styled";
 import { DetailTitle, Title } from "../../styles/commonStyles";
 import Link from "next/link";
 
-const Container = styled.div`
+const HomeContainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
     width: 100%;
     margin: 0 auto;
@@ -72,7 +72,7 @@ const Community = styled.div`
 
 const HomeForm = () => {
     return (
-        <Container>
+        <HomeContainer>
             <div>
                 <Result
                     icon={<SmileOutlined />}
@@ -132,7 +132,7 @@ const HomeForm = () => {
                 </Link>
                 <div>날짜</div>
             </Community>
-        </Container>
+        </HomeContainer>
     );
 };
 
