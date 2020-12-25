@@ -29,7 +29,6 @@ const addMark = (
 
     // 툴바가 링크일시
     if (toolbar.includes("[]()")) {
-        console.log(curText);
         if (curText === "") {
             const newText = `${startText}${toolbar}${restText}`;
             return newText;
@@ -42,9 +41,9 @@ const addMark = (
     if (inline) {
         // 인라인인데, 선택한 텍스트가 없을 시
         if (curText === "") {
-            // 만약 툴바가 ```라면 앞에 js도 넣음.
+            // 만약 선택한 값이 없는데, 툴바가 ```라면 실행.
             const newText = `${startText}${
-                toolbar === "```" ? `${toolbar}js` : toolbar
+                toolbar === "```" ? `${toolbar}js ` : toolbar
             }입력${toolbar}${restText}`;
             return newText;
         }
@@ -59,11 +58,11 @@ const addMark = (
     } else {
         // 툴바가 리스트고, > 일때
         if (toolbar === "-" || toolbar.includes(">")) {
-            const newText = `${startText}\n${toolbar} ${restText}`;
+            const newText = `${startText}${curText}\n${toolbar} ${restText}`;
             return newText;
         }
         // 툴바가 이미지도, 헤더도, 인라인도 아닐시
-        const newText = `${startText}\n${toolbar}\n${restText}`;
+        const newText = `${startText}${curText}\n${toolbar}\n${restText}`;
         return newText;
     }
 };

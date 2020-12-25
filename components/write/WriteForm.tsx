@@ -69,7 +69,7 @@ const Preview = styled.div`
         border-bottom: 1px solid ${(props) => props.theme.darkWhite};
     }
     width: 45%;
-    max-height: 690px;
+    max-height: 990px;
     min-height: 600px;
     border: 1px solid #dbdbdb;
     padding: 10px;
@@ -154,7 +154,7 @@ const WriteForm = ({
                     />
                     <Description
                         onChange={onChangeDesc}
-                        defaultValue="문서의 설명을 입력하세요."></Description>
+                        placeholder="문서의 설명을 입력하세요."></Description>
                     <ToolbarComponent onHeader={onHeader} />
                     <Editor
                         id="editor"

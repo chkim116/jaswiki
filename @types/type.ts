@@ -25,3 +25,11 @@ export type SignPayload = {
     userId: string;
     password: string;
 };
+
+export type WritePayload = {
+    title: string;
+    description: string;
+    content: string;
+    stack: number[];
+    creator: string;
+};
