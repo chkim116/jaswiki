@@ -64,7 +64,7 @@ const SearchForm = ({ searchText, loading }: Props) => {
                     </IsSearchTitle>
                     <SearchList>
                         <SearchContent>
-                            <Link href="/detail/3">
+                            <Link href="/docs/3">
                                 <a>검색목록</a>
                             </Link>
                             <div>
@@ -82,7 +82,12 @@ const SearchForm = ({ searchText, loading }: Props) => {
                     </SearchList>
                 </div>
             ) : (
-                <Skeleton active />
+                <>
+                    <Skeleton active />
+                    <Skeleton active />
+                    <Skeleton active />
+                    <Skeleton active />
+                </>
             )}
         </SearchContainer>
     );

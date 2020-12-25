@@ -47,6 +47,7 @@ const UserBadge = styled.div`
         width: 100px;
         display: none;
         text-align: center;
+        z-index: 550;
 
         li {
             list-style: none;
