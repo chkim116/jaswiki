@@ -48,6 +48,21 @@ export const ContentDetail = styled.div`
             border-bottom: 2px solid ${(props) => props.theme.darkWhite};
         }
     }
+
+    blockquote {
+        border-left: 2px solid ${(props) => props.theme.green};
+        padding-left: 10px;
+        font-size: ${(props) => props.theme.ls};
+        font-weight: 500;
+        margin: 5px 0;
+    }
+
+    pre {
+        background-color: ${(props) => props.theme.darkWhite};
+        overflow: auto;
+        padding: 8px;
+        margin: 5px 0;
+    }
 `;
 
 type Props = {

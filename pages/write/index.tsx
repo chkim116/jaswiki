@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import WriteForm from "../../components/write/WriteForm";
 import marked from "marked";
 import { useInput } from "@cooksmelon/event";
-import { useReplace } from "@cooksmelon/utils";
 import { SelectValue } from "antd/lib/select";
 
 const addMark = (
@@ -43,7 +42,15 @@ const addMark = (
     if (inline) {
         // 인라인인데, 선택한 텍스트가 없을 시
         if (curText === "") {
-            const newText = `${startText}${toolbar}입력${toolbar}${restText}`;
+            // 만약 툴바가 ```라면 앞에 js도 넣음.
+            const newText = `${startText}${
+                toolbar === "```" ? `${toolbar}js` : toolbar
+            }입력${toolbar}${restText}`;
+            return newText;
+        }
+        // 만약 툴바가 ```라면 js를 넣어 변환
+        if (toolbar === "```") {
+            const newText = `${startText} ${toolbar}js\n${curText}\n${toolbar} ${restText}`;
             return newText;
         }
         // 인라인인데, 선택한 텍스트가 있을 때
@@ -63,68 +70,95 @@ const addMark = (
 
 const index = () => {
     const [text, setText] = useState<string>("");
-    const [head, setHead] = useState<RegExpMatchArray | null>([]);
-    const [previewText, setPreviewText] = useState<string>("");
+    const [desc, setDesc] = useState<string>("");
+    const [submitText, setSubmitText] = useState<string>("");
     const [startText, setStartText] = useState<number>(0);
     const [endText, setEndText] = useState<number>(0);
     const [title, onChangeTitle] = useInput("");
 
     const editor = useRef<HTMLTextAreaElement>(null);
+
+    const onChangeDesc = useCallback(
+        (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setDesc(e.target.value);
+        },
+        []
+    );
+
+    console.log(desc, submitText);
+
     // 에디터 입력시
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const edit = editor.current as HTMLTextAreaElement;
-        setStartText(edit.selectionStart);
-        setEndText(edit.selectionEnd);
-        setText(e.target.value);
-    };
-
-    // 툴바버튼 클릭시 이벤트
-    const onHeader = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const { toolbar, lnline } = e.currentTarget.dataset;
-        const newText = addMark(
-            text,
-            startText,
-            endText,
-            toolbar as string,
-            lnline as string
-        );
-        setText(newText);
-    };
-
-    // 글자를 드래그했을 시 시작, 끝을 저장
-    const onSelect = () => {
-        const edit = editor.current as HTMLTextAreaElement;
-        setStartText(edit.selectionStart);
-        setEndText(edit.selectionEnd);
-    };
-
-    // 엔터키 이벤트
-    const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.keyCode === 13) {
+    const onChange = useCallback(
+        (e: React.ChangeEvent<HTMLTextAreaElement>) => {
             const edit = editor.current as HTMLTextAreaElement;
             setStartText(edit.selectionStart);
             setEndText(edit.selectionEnd);
-        }
-    };
+            setText(e.target.value);
+        },
+        []
+    );
+
+    // 툴바버튼 클릭시 이벤트
+    const onHeader = useCallback(
+        (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            const { toolbar, lnline } = e.currentTarget.dataset;
+            const newText = addMark(
+                text,
+                startText,
+                endText,
+                toolbar as string,
+                lnline as string
+            );
+            setText(newText);
+        },
+        [text, startText, endText]
+    );
+
+    // 글자를 드래그했을 시 시작, 끝을 저장
+    const onSelect = useCallback(() => {
+        const edit = editor.current as HTMLTextAreaElement;
+        setStartText(edit.selectionStart);
+        setEndText(edit.selectionEnd);
+    }, []);
+
+    // 엔터키 이벤트
+    const onKeyUp = useCallback(
+        (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+            if (e.keyCode === 13) {
+                const edit = editor.current as HTMLTextAreaElement;
+                setStartText(edit.selectionStart);
+                setEndText(edit.selectionEnd);
+            }
+        },
+        []
+    );
 
     // 상하좌우 키보드 이벤트
-    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (
-            e.keyCode === 37 ||
-            e.keyCode === 38 ||
-            e.keyCode === 39 ||
-            e.keyCode === 40
-        ) {
-            const edit = editor.current as HTMLTextAreaElement;
-            setStartText(edit.selectionStart ? edit.selectionStart - 1 : 0);
-            setEndText(edit.selectionEnd);
-        }
-    };
+    const onKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+            if (
+                e.keyCode === 37 ||
+                e.keyCode === 38 ||
+                e.keyCode === 39 ||
+                e.keyCode === 40
+            ) {
+                const edit = editor.current as HTMLTextAreaElement;
+                setStartText(edit.selectionStart ? edit.selectionStart - 1 : 0);
+                setEndText(edit.selectionEnd);
+            }
+        },
+        []
+    );
 
     // 스택 선택시
     const onStack = useCallback((v: SelectValue) => {
         console.log(v);
     }, []);
+
+    // 제출 시 텍스트를 html로 파싱하여 제출합니다.
+    const onSubmit = useCallback(() => {
+        setSubmitText(marked(text));
+    }, [text]);
 
     // 적용되는 기술 스택
     const stackList = [
@@ -162,37 +196,25 @@ const index = () => {
         },
     ];
 
-    // 입력시 프리뷰로 볼 수 있게끔
-    useEffect(() => {
-        setPreviewText(marked(text ? text : ""));
-    }, [text]);
-
-    // 프리뷰텍스트가 업데이트 될 때마다 목차 목록 추가.
-    useEffect(() => {
-        const headReg = previewText.match(
-            /<([h][1])[^>]*>[가-힣\w\s']+<\/\1>/g
-        );
-
-        setHead(headReg);
-    }, [previewText]);
-
     return (
-        <WriteForm
-            // isEdit={isEdit}
-            onStack={onStack}
-            stackList={stackList}
-            onChangeTitle={onChangeTitle}
-            onChange={onChange}
-            onHeader={onHeader}
-            onSelect={onSelect}
-            onKeyUp={onKeyUp}
-            onKeyDown={onKeyDown}
-            head={head}
-            text={text}
-            previewText={previewText}
-            editor={editor}
-            title={title}
-        />
+        <>
+            <WriteForm
+                // isEdit={isEdit}
+                onChangeDesc={onChangeDesc}
+                onStack={onStack}
+                onSubmit={onSubmit}
+                stackList={stackList}
+                onChangeTitle={onChangeTitle}
+                onChange={onChange}
+                onHeader={onHeader}
+                onSelect={onSelect}
+                onKeyUp={onKeyUp}
+                onKeyDown={onKeyDown}
+                text={text}
+                editor={editor}
+                title={title}
+            />
+        </>
     );
 };
 

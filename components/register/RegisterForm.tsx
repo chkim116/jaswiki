@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { SignProps } from "../login/LoginForm";
 
 export const SignContainer = styled.div`
     display: flex;
@@ -44,7 +45,7 @@ export const Form = styled.form`
     }
 `;
 
-const RegisterForm = () => {
+const RegisterForm = ({ onFormChange, onSubmit }: SignProps) => {
     return (
         <SignContainer>
             <div>
@@ -54,10 +55,20 @@ const RegisterForm = () => {
                     IP를 숨기는 등 다양한 혜택을 누릴 수 있습니다😄
                 </h1>
             </div>
-            <Form>
-                <input type="text" placeholder="아이디 *" required />
-                <input type="password" placeholder="비밀번호 *" required />
-                <input type="email" placeholder="이메일" />
+            <Form onChange={onFormChange} onSubmit={onSubmit}>
+                <input
+                    type="text"
+                    name="userId"
+                    placeholder="아이디 *"
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="비밀번호 *"
+                    required
+                />
+                <input type="email" name="email" placeholder="이메일" />
                 <button type="submit">가입완료</button>
             </Form>
             <Link href="/login">

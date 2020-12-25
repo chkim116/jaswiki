@@ -1,15 +1,12 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { FcAddImage, FcLink, FcList } from "react-icons/fc";
-import { GrBlockQuote } from "react-icons/gr";
-import { IoCodeWorkingOutline } from "react-icons/io5";
-import { BsTypeItalic } from "react-icons/bs";
-import { ContentDetail, LinkTitle } from "../common/DocsDetailComponent";
-import { Anchor } from "antd";
-import { useReplace } from "@cooksmelon/utils";
+import { ContentDetail } from "../common/DocsDetailComponent";
 import { Select } from "antd";
 import { SelectValue } from "antd/lib/select";
 const { Option } = Select;
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import ToolbarComponent from "./ToolbarComponent";
 
 const WriteContainer = styled.div`
     width: 100%;
@@ -35,33 +32,12 @@ const EditorContainer = styled.div`
     }
 `;
 
-const Toolbar = styled.div`
+const Description = styled.textarea`
     width: 100%;
-    display: flex;
     border: 1px solid ${(props) => props.theme.darkWhite};
-    border-bottom: none;
-    padding: 7px 0;
-    position: sticky;
-    top: 0;
-    button {
-        &:nth-of-type(odd) {
-            border-right: 1px solid ${(props) => props.theme.darkWhite};
-            border-left: 1px solid ${(props) => props.theme.darkWhite};
-        }
-        font-weight: 700;
-        line-height: 100%;
-        padding: 3px 10px;
-        height: 100%;
-
-        &:hover {
-            background: #fafbfc;
-        }
-    }
-`;
-
-const BookAnchor = styled(Anchor)`
-    margin-bottom: 36px;
-    width: 100%;
+    padding: 10px;
+    resize: none;
+    outline: none;
 `;
 
 const Editor = styled.textarea`
@@ -107,8 +83,10 @@ const DocsBtn = styled.div`
     justify-content: center;
     margin-bottom: 36px;
     button {
+        width: 150px;
+        text-align: center;
         background-color: ${(props) => props.theme.green};
-        padding: 8px 12px;
+        padding: 8px;
         color: ${(props) => props.theme.white};
         border-radius: 8px;
     }
@@ -122,33 +100,45 @@ const SelectStack = styled(Select)`
 
 type Props = {
     onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChangeDesc: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onHeader: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     onSelect: () => void;
     onStack: (value: SelectValue) => void;
     onKeyUp: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
     onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+    onSubmit: () => void;
     text: string;
-    previewText: string;
     editor: React.RefObject<HTMLTextAreaElement> | null;
     title: string | number;
-    head: RegExpMatchArray | null;
     stackList: { stackName: string; type: number }[];
     isEdit?: boolean;
 };
 
+const renderers = {
+    code: ({ language, value }: { language: string; value: string }) => {
+        return value === undefined ? (
+            <> </>
+        ) : (
+            <SyntaxHighlighter
+                children={value}
+                language={language}></SyntaxHighlighter>
+        );
+    },
+};
+
 const WriteForm = ({
     onChangeTitle,
+    onChangeDesc,
     onChange,
     onHeader,
     onSelect,
+    onSubmit,
     onKeyUp,
     onKeyDown,
     text,
-    previewText,
     editor,
     title,
-    head,
     stackList,
     onStack,
     isEdit,
@@ -162,86 +152,10 @@ const WriteForm = ({
                         type="text"
                         placeholder="문서의 제목을 입력하세요."
                     />
-                    <Toolbar>
-                        <button
-                            type="button"
-                            data-toolbar="#"
-                            onClick={onHeader}>
-                            H1
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="##"
-                            onClick={onHeader}>
-                            H2
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="###"
-                            onClick={onHeader}>
-                            H3
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="####"
-                            onClick={onHeader}>
-                            H4
-                        </button>
-
-                        <button
-                            type="button"
-                            data-toolbar="**"
-                            data-lnline="true"
-                            onClick={onHeader}>
-                            <strong>B</strong>
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="_"
-                            data-lnline="true"
-                            onClick={onHeader}>
-                            <BsTypeItalic />
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="```"
-                            data-lnline="true"
-                            onClick={onHeader}>
-                            <IoCodeWorkingOutline />
-                        </button>
-
-                        <button
-                            type="button"
-                            data-toolbar="---"
-                            onClick={onHeader}>
-                            ---
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar=">"
-                            onClick={onHeader}>
-                            <GrBlockQuote />
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="-"
-                            onClick={onHeader}>
-                            <FcList />
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="[]()"
-                            onClick={onHeader}>
-                            <FcLink />
-                        </button>
-                        <button
-                            type="button"
-                            data-toolbar="img"
-                            onClick={onHeader}>
-                            <FcAddImage />
-                        </button>
-                        <input type="file" accept="image/*" hidden />
-                    </Toolbar>
+                    <Description
+                        onChange={onChangeDesc}
+                        defaultValue="문서의 설명을 입력하세요."></Description>
+                    <ToolbarComponent onHeader={onHeader} />
                     <Editor
                         id="editor"
                         onKeyUp={onKeyUp}
@@ -270,29 +184,21 @@ const WriteForm = ({
                         ))}
                     </SelectStack>
                 </EditorContainer>
+
                 <Preview className="editor__container">
                     <h1>{title ? title : "문서 제목을 입력바랍니다."}</h1>
-
-                    {head && (
-                        <BookAnchor affix={false}>
-                            <LinkTitle>목차</LinkTitle>
-                            {head.map((word) => (
-                                <Anchor.Link
-                                    key={word}
-                                    href={`#${useReplace(word)}`}
-                                    title={useReplace(word)}></Anchor.Link>
-                            ))}
-                        </BookAnchor>
-                    )}
-                    <ContentDetail
-                        dangerouslySetInnerHTML={{
-                            __html: previewText,
-                        }}></ContentDetail>
+                    <ContentDetail>
+                        <ReactMarkdown renderers={renderers}>
+                            {text}
+                        </ReactMarkdown>
+                    </ContentDetail>
                 </Preview>
             </WriteContainer>
 
             <DocsBtn>
-                <button type="submit">문서 등록</button>
+                <button type="submit" onClick={onSubmit}>
+                    문서 등록
+                </button>
             </DocsBtn>
         </>
     );
