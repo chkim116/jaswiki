@@ -6,7 +6,7 @@ import {
     getDocsRequest,
     getDocsSuccess,
     getDocsFailure,
-} from "../redux/write";
+} from "../redux/docs";
 import Axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { WritePayload } from "../@types/type";

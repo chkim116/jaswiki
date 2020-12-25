@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { docs } from "../@types/type";
 
-type WriteState = {
+type DocsState = {
     isLoading: boolean;
     isDone: boolean;
     isErr: string | null;
@@ -9,7 +9,7 @@ type WriteState = {
     docs: docs[];
 };
 
-const writeState: WriteState = {
+const docsState: DocsState = {
     isLoading: false,
     isDone: false,
     isErr: null,
@@ -41,9 +41,9 @@ const writeState: WriteState = {
     ],
 };
 
-const write = createSlice({
-    name: "write",
-    initialState: writeState,
+const docs = createSlice({
+    name: "docs",
+    initialState: docsState,
     reducers: {
         getDocByIdRequest: (state, { payload }) => {
             state.isDone = false;
@@ -86,6 +86,6 @@ export const {
     getDocsRequest,
     getDocsSuccess,
     getDocsFailure,
-} = write.actions;
+} = docs.actions;
 
-export default write.reducer;
+export default docs.reducer;

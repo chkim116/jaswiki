@@ -3,6 +3,7 @@ import WriteForm from "../../components/write/WriteForm";
 import marked from "marked";
 import { useInput } from "@cooksmelon/event";
 import { SelectValue } from "antd/lib/select";
+import { useDispatch } from "react-redux";
 
 const addMark = (
     text: string,
@@ -74,7 +75,7 @@ const index = () => {
     const [startText, setStartText] = useState<number>(0);
     const [endText, setEndText] = useState<number>(0);
     const [title, onChangeTitle] = useInput("");
-
+    const dispatch = useDispatch();
     const editor = useRef<HTMLTextAreaElement>(null);
 
     const onChangeDesc = useCallback(
