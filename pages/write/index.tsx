@@ -3,7 +3,9 @@ import WriteForm from "../../components/write/WriteForm";
 import marked from "marked";
 import { useInput } from "@cooksmelon/event";
 import { SelectValue } from "antd/lib/select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { WriteRequest } from "../../redux/write";
+import { RootState } from "../../redux";
 
 const addMark = (
     text: string,
@@ -71,21 +73,20 @@ const addMark = (
 const index = () => {
     const [text, setText] = useState<string>("");
     const [desc, setDesc] = useState<string>("");
-    const [submitText, setSubmitText] = useState<string>("");
+    const [stack, setStack] = useState<number[]>([]);
     const [startText, setStartText] = useState<number>(0);
     const [endText, setEndText] = useState<number>(0);
     const [title, onChangeTitle] = useInput("");
     const dispatch = useDispatch();
-    const editor = useRef<HTMLTextAreaElement>(null);
+    const { user } = useSelector((state: RootState) => state.auth);
 
+    const editor = useRef<HTMLTextAreaElement>(null);
     const onChangeDesc = useCallback(
         (e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setDesc(e.target.value);
         },
         []
     );
-
-    console.log(desc, submitText);
 
     // 에디터 입력시
     const onChange = useCallback(
@@ -152,13 +153,21 @@ const index = () => {
 
     // 스택 선택시
     const onStack = useCallback((v: SelectValue) => {
-        console.log(v);
+        setStack(() => v as number[]);
     }, []);
 
     // 제출 시 텍스트를 html로 파싱하여 제출합니다.
     const onSubmit = useCallback(() => {
-        setSubmitText(marked(text));
-    }, [text]);
+        const submit = {
+            title,
+            description: desc,
+            content: marked(text),
+            creator: { userId: "id", level: 3 },
+            stack,
+        };
+        dispatch(WriteRequest(submit));
+        console.log(submit);
+    }, [text, title, desc, stack]);
 
     // 적용되는 기술 스택
     const stackList = [

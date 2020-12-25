@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { docs } from "../@types/type";
+import { doc } from "../@types/type";
 
 type DocsState = {
     isLoading: boolean;
     isDone: boolean;
     isErr: string | null;
-    doc: docs;
-    docs: docs[];
+    doc: doc;
+    docs: doc[];
 };
 
 const docsState: DocsState = {
@@ -47,11 +47,11 @@ const docs = createSlice({
     reducers: {
         getDocByIdRequest: (state, { payload }) => {
             state.isDone = false;
-            state.isLoading = false;
+            state.isLoading = true;
             state.isErr = null;
         },
         getDocByIdSuccess: (state, { payload }) => {
-            state.isLoading = true;
+            state.isLoading = false;
             state.isDone = true;
             state.doc = payload;
         },
@@ -61,13 +61,13 @@ const docs = createSlice({
             state.isErr = payload;
         },
 
-        getDocsRequest: (state, { payload }) => {
+        getDocsRequest: (state) => {
             state.isDone = false;
-            state.isLoading = false;
+            state.isLoading = true;
             state.isErr = null;
         },
         getDocsSuccess: (state, { payload }) => {
-            state.isLoading = true;
+            state.isLoading = false;
             state.isDone = true;
             state.docs = payload;
         },

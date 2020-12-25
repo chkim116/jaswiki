@@ -32,11 +32,11 @@ const auth = createSlice({
     reducers: {
         loginRequest: (state, { payload }) => {
             state.isLogin = false;
-            state.isLoading = false;
+            state.isLoading = true;
             state.isLoginErr = null;
         },
         loginSuccess: (state) => {
-            state.isLoading = true;
+            state.isLoading = false;
             state.isLogin = true;
         },
         loginFailure: (state, { payload }) => {
@@ -46,12 +46,12 @@ const auth = createSlice({
         },
 
         registerRequest: (state, { payload }) => {
-            state.isLoading = false;
+            state.isLoading = true;
             state.isRegister = false;
             state.isRegisterErr = null;
         },
         registerSuccess: (state) => {
-            state.isLoading = true;
+            state.isLoading = false;
             state.isRegister = true;
         },
         registerFailure: (state, { payload }) => {
@@ -61,12 +61,13 @@ const auth = createSlice({
         },
 
         getAuthRequest: (state) => {
-            state.isLoading = false;
+            state.isLoading = true;
             state.isLogin = false;
             state.isLoginErr = null;
         },
         getAuthSuccess: (state, { payload }) => {
-            state.isLoading = true;
+            state.isLoading = false;
+            state.isLogin = true;
             state.user = payload;
         },
         getAuthFailure: (state, { payload }) => {

@@ -9,17 +9,16 @@ import {
 } from "../redux/docs";
 import Axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { WritePayload } from "../@types/type";
 
-function getDocById(data: WritePayload) {
-    return Axios.post("/user", data).then((res) => res.data);
+function getDocById(id: string) {
+    return Axios.get(`/docs/${id}`).then((res) => res.data);
 }
 
-function getDoc(data: WritePayload) {
-    return Axios.post("/user/register", data).then((res) => res.data);
+function getDoc() {
+    return Axios.get("/docs").then((res) => res.data);
 }
 
-function* getById({ payload }: PayloadAction<WritePayload>) {
+function* getById({ payload }: PayloadAction<string>) {
     const docById = yield call(getDocById, payload);
     try {
         yield put(getDocByIdSuccess(docById));
@@ -28,8 +27,8 @@ function* getById({ payload }: PayloadAction<WritePayload>) {
         yield put(getDocByIdFailure(err));
     }
 }
-function* getDocs({ payload }: PayloadAction<WritePayload>) {
-    const docs = yield call(getDoc, payload);
+function* getDocs() {
+    const docs = yield call(getDoc);
     try {
         yield put(getDocsSuccess(docs));
     } catch (err) {

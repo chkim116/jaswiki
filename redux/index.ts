@@ -2,6 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import auth from "./auth";
 import docs from "./docs";
+import write from "./write";
 
 const rootReducer = (state: any, action: any) => {
     switch (action.type) {
@@ -11,6 +12,7 @@ const rootReducer = (state: any, action: any) => {
             const combineReducer = combineReducers({
                 auth,
                 docs,
+                write,
             });
             return combineReducer(state, action);
         }

@@ -7,7 +7,7 @@ export type user = {
     docs: string[];
 };
 
-export type docs = {
+export type doc = {
     id: string;
     title: string;
     description: string;
@@ -31,5 +31,5 @@ export type WritePayload = {
     description: string;
     content: string;
     stack: number[];
-    creator: string;
+    creator: { userId: string; level: number };
 };
