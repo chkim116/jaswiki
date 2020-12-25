@@ -1,6 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
-import SearchForm from "../components/search/SearchForm";
+import SearchForm from "../../components/search/SearchForm";
 
 const search = () => {
     const {

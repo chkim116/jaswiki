@@ -23,21 +23,39 @@ const BookAnchor = styled(Anchor)`
     }
 `;
 
-const LinkTitle = styled.div`
-    background: ${(props) => props.theme.green};
+export const LinkTitle = styled.div`
+    background: ${(props) => props.theme.darkWhite};
     text-align: center;
     padding: 6px 0;
     font-size: ${(props) => props.theme.ls};
-    color: ${(props) => props.theme.white};
+    color: ${(props) => props.theme.black};
 `;
 
-const ContentDetail = styled.div`
+export const ContentDetail = styled.div`
     width: 100%;
-    margin-top: 40px;
     min-height: 300px;
+    h1 {
+        position: relative;
+        margin-top: 40px;
+        padding-bottom: 12px;
+        &:after {
+            width: 30px;
+            height: 1px;
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            border-bottom: 2px solid ${(props) => props.theme.darkWhite};
+        }
+    }
 `;
 
-const DocsDetailComponent = () => {
+type Props = {
+    anchor?: string[];
+    detailTitle?: string[];
+};
+
+const DocsDetailComponent = ({ anchor, detailTitle }: Props) => {
     return (
         <Content>
             <ContentDesc>

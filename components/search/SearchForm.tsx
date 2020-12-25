@@ -57,29 +57,51 @@ const SearchForm = ({ searchText, loading }: Props) => {
     return (
         <SearchContainer>
             <Title>Results : {searchText}</Title>
+
             {loading ? (
                 <div>
-                    <IsSearchTitle>
-                        1,138개의 게시글을 찾았습니다.
-                    </IsSearchTitle>
-                    <SearchList>
-                        <SearchContent>
-                            <Link href="/docs/3">
-                                <a>검색목록</a>
+                    {searchText ? (
+                        <>
+                            <IsSearchTitle>
+                                1,138개의 게시글을 찾았습니다.
+                            </IsSearchTitle>
+                            <SearchList>
+                                <SearchContent>
+                                    <Link href="/docs/3">
+                                        <a>검색목록</a>
+                                    </Link>
+                                    <div>
+                                        <p>
+                                            Lorem ipsum, dolor sit amet
+                                            consectetur adipisicing elit. Ipsa
+                                            cum aut maiores eius, omnis mollitia
+                                            reiciendis consequatur dicta modi
+                                            repudiandae fuga! Temporibus eos
+                                            deleniti laboriosam officia sit
+                                            dolore iure omnis!
+                                        </p>
+                                        <span>생성자</span>
+                                    </div>
+                                </SearchContent>
+                            </SearchList>
+                        </>
+                    ) : (
+                        <EmptyData
+                            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                            imageStyle={{
+                                height: 60,
+                            }}
+                            description={
+                                <span>
+                                    문서가 존재하지 않습니다. 모두를 위해
+                                    작성해주실래요?
+                                </span>
+                            }>
+                            <Link href="/write">
+                                <Button type="primary">문서 작성</Button>
                             </Link>
-                            <div>
-                                <p>
-                                    Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Ipsa cum aut maiores eius,
-                                    omnis mollitia reiciendis consequatur dicta
-                                    modi repudiandae fuga! Temporibus eos
-                                    deleniti laboriosam officia sit dolore iure
-                                    omnis!
-                                </p>
-                                <span>생성자</span>
-                            </div>
-                        </SearchContent>
-                    </SearchList>
+                        </EmptyData>
+                    )}
                 </div>
             ) : (
                 <>

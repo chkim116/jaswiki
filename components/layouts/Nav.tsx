@@ -41,6 +41,7 @@ const UserBadge = styled.div`
         margin-right: 8px;
     }
     ul {
+        background: ${(props) => props.theme.white};
         padding: 0;
         margin: 0;
         position: absolute;
