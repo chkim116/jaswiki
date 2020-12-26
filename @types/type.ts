@@ -13,11 +13,11 @@ export type doc = {
     description: string;
     content: string;
     createDate: string;
-    recentDate: string;
+    recentUpdate: string;
     stack: number[];
-    creator: { userId: string; level: number };
-    recentCreator: { userId: string; level: number };
-    contributer: string[];
+    creator: { userId: string; level: number; id: string };
+    recentCreator: { userId: string; level: number; id: string };
+    contributer: [{ userId: string; level: number; id: string }];
 };
 
 export type SignPayload = {

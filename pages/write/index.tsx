@@ -71,6 +71,41 @@ const addMark = (
         return newText;
     }
 };
+// 적용되는 기술 스택
+const stackList = [
+    {
+        stackName: "HTML",
+        type: 1,
+    },
+    {
+        stackName: "CSS",
+        type: 2,
+    },
+    {
+        stackName: "JS",
+        type: 3,
+    },
+    {
+        stackName: "React",
+        type: 4,
+    },
+    {
+        stackName: "Next",
+        type: 5,
+    },
+    {
+        stackName: "Node.js",
+        type: 6,
+    },
+    {
+        stackName: "TS",
+        type: 7,
+    },
+    {
+        stackName: "JQuery",
+        type: 0,
+    },
+];
 
 const index = () => {
     const [text, setText] = useState<string>("");
@@ -157,9 +192,12 @@ const index = () => {
     );
 
     // 스택 선택시
-    const onStack = useCallback((v: SelectValue) => {
-        setStack(() => v as number[]);
-    }, []);
+    const onStack = useCallback(
+        (v: SelectValue & any) => {
+            setStack(() => v);
+        },
+        [stack]
+    );
 
     // 제출 시 텍스트를 html로 파싱하여 제출합니다.
     const onSubmit = useCallback(() => {
@@ -174,42 +212,6 @@ const index = () => {
         dispatch(WriteRequest(submit));
         dispatch(loadRequest());
     }, [text, title, desc, stack, user]);
-
-    // 적용되는 기술 스택
-    const stackList = [
-        {
-            stackName: "HTML",
-            type: 1,
-        },
-        {
-            stackName: "CSS",
-            type: 2,
-        },
-        {
-            stackName: "JS",
-            type: 3,
-        },
-        {
-            stackName: "React",
-            type: 4,
-        },
-        {
-            stackName: "Next",
-            type: 5,
-        },
-        {
-            stackName: "Node.js",
-            type: 6,
-        },
-        {
-            stackName: "TS",
-            type: 7,
-        },
-        {
-            stackName: "JQuery",
-            type: 0,
-        },
-    ];
 
     // 글작성완료시 디테일페이지로이동`
     usePush(isDone && isSubmit, `/docs/${detailRouter}`);

@@ -6,9 +6,13 @@ import {
     getDocsRequest,
     getDocsSuccess,
     getDocsFailure,
+    delDocsRequest,
+    delDocsSuccess,
+    delDocsFailure,
 } from "../redux/docs";
 import Axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { loadFailure } from "../redux/commonLoading";
 
 function getDocById(id: string) {
     return Axios.get(`/docs/${id}`).then((res) => res.data);
@@ -16,6 +20,10 @@ function getDocById(id: string) {
 
 function getDoc() {
     return Axios.get("/docs").then((res) => res.data);
+}
+
+function delDoc(id: string) {
+    return Axios.delete(`/docs/del/${id}`);
 }
 
 function* getById({ payload }: PayloadAction<string>) {
@@ -27,6 +35,7 @@ function* getById({ payload }: PayloadAction<string>) {
         yield put(getDocByIdFailure(err));
     }
 }
+
 function* getDocs() {
     try {
         const docs = yield call(getDoc);
@@ -34,6 +43,17 @@ function* getDocs() {
     } catch (err) {
         console.error(err);
         yield put(getDocsFailure(err));
+    }
+}
+
+function* delDocs({ payload }: PayloadAction<string>) {
+    try {
+        yield call(delDoc, payload);
+        yield put(delDocsSuccess());
+    } catch (err) {
+        console.error(err);
+        yield put(delDocsFailure(err));
+        yield put(loadFailure());
     }
 }
 
@@ -45,6 +65,10 @@ function* watchGetDocs() {
     yield takeLatest(getDocsRequest, getDocs);
 }
 
+function* watchDelDocs() {
+    yield takeLatest(delDocsRequest, delDocs);
+}
+
 export default function* authSaga() {
-    yield all([fork(watchGetById), fork(watchGetDocs)]);
+    yield all([fork(watchGetById), fork(watchGetDocs), fork(watchDelDocs)]);
 }

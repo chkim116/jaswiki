@@ -2,8 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Title } from "../../styles/commonStyles";
 import Link from "next/link";
-import { SiJavascript, SiReact } from "react-icons/si";
 import DocsDetailComponent from "../common/DocsDetailComponent";
+import { doc } from "../../@types/type";
+import StackComponent from "../common/StackComponent";
+import { useLevelIcon } from "../../hook";
 
 const DocsContainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
@@ -60,21 +62,41 @@ const DocsFooter = styled.div`
     }
 `;
 
-const DocsForm = () => {
+const Del = styled.div`
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+type Props = {
+    doc: doc;
+    id?: string;
+    onDelete: () => void;
+};
+
+const DocsForm = ({ doc, id, onDelete }: Props) => {
+    const {
+        title,
+        stack,
+        content,
+        creator,
+        createDate,
+        description,
+        contributer,
+        recentCreator,
+        recentUpdate,
+    } = doc;
     return (
         <DocsContainer>
             <Title>
-                Docs...
-                <span>
-                    <SiJavascript fill="#FBE574" size={24} />
-                    <SiReact fill="blue" size={24} />
-                </span>
+                {title}
+                <StackComponent stack={stack} />
             </Title>
             <StackDetail>
                 <div>
                     <span>이 문서는</span>
-                    <SiJavascript fill="#FBE574" size={30} />
-                    <SiReact fill="blue" size={30} />
+                    <StackComponent stack={stack} size={30} />
                     <span>에서 응용이 가능합니다.</span>
                 </div>
                 <DocsDesc>
@@ -85,32 +107,50 @@ const DocsForm = () => {
                         <Link href="/">
                             <a>문서정보</a>
                         </Link>
+                        {id === creator.id && (
+                            <Del onClick={onDelete}>삭제</Del>
+                        )}
                     </div>
                     <div>
-                        <div>🕑 {new Date().toLocaleDateString()} </div>
-                        <div>🎓JaSwiki</div>
+                        <div>🕑 {createDate} </div>
+                        <div>
+                            {useLevelIcon(creator.level)} {creator.userId}
+                        </div>
                     </div>
                 </DocsDesc>
             </StackDetail>
 
-            <DocsDetailComponent />
+            <DocsDetailComponent content={content} description={description} />
 
             <DocsFooter>
                 <div>
                     <div>최초 생성일</div>
-                    <span>{new Date().toLocaleDateString()}</span>
+                    <span>{createDate}</span>
                 </div>
                 <div>
                     <div>생성자</div>
-                    <span>🎓JaSwiki</span>
+                    <span>
+                        {useLevelIcon(creator.level)} {creator.userId}
+                    </span>
                 </div>
-                <div>
-                    <div>최근 수정</div>
-                    <span>🎓Retwiki / {new Date().toLocaleDateString()}</span>
-                </div>
+                {recentCreator.userId && (
+                    <div>
+                        <div>최근 수정</div>
+                        <span>
+                            {useLevelIcon(recentCreator.level)}
+                            {recentCreator.userId} / {recentUpdate}
+                        </span>
+                    </div>
+                )}
                 <div>
                     <div>기여자</div>
-                    <span>🎓JaSwiki, 🎓Retwiki</span>
+                    <span>
+                        {contributer.map((con) => (
+                            <span key={con.userId}>
+                                {useLevelIcon(con.level)} {con.userId}
+                            </span>
+                        ))}
+                    </span>
                 </div>
             </DocsFooter>
         </DocsContainer>

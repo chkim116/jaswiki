@@ -21,7 +21,7 @@ const AboutForm = () => {
                     <span>🔐</span>
                 </Title>
             </div>
-            <DocsDetailComponent />
+            <DocsDetailComponent content="content" description="desc" />
         </AboutCotainer>
     );
 };

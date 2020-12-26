@@ -4,6 +4,7 @@ import { doc } from "../@types/type";
 type DocsState = {
     isLoading: boolean;
     isDone: boolean;
+    isDel: boolean;
     isErr: string | null;
     doc: doc;
     docs: doc[];
@@ -12,6 +13,7 @@ type DocsState = {
 const docsState: DocsState = {
     isLoading: false,
     isDone: false,
+    isDel: false,
     isErr: null,
     doc: {
         id: "",
@@ -19,11 +21,11 @@ const docsState: DocsState = {
         description: "",
         content: "",
         createDate: "",
-        recentDate: "",
+        recentUpdate: "",
         stack: [0],
-        creator: { userId: "", level: 0 },
-        recentCreator: { userId: "", level: 0 },
-        contributer: [""],
+        creator: { userId: "", level: 0, id: "" },
+        recentCreator: { userId: "", level: 0, id: "" },
+        contributer: [{ userId: "", level: 0, id: "" }],
     },
     docs: [
         {
@@ -32,11 +34,11 @@ const docsState: DocsState = {
             description: "",
             content: "",
             createDate: "",
-            recentDate: "",
+            recentUpdate: "",
             stack: [],
-            creator: { userId: "", level: 0 },
-            recentCreator: { userId: "", level: 0 },
-            contributer: [],
+            creator: { userId: "", level: 0, id: "" },
+            recentCreator: { userId: "", level: 0, id: "" },
+            contributer: [{ userId: "", level: 0, id: "" }],
         },
     ],
 };
@@ -76,6 +78,21 @@ const docs = createSlice({
             state.isLoading = false;
             state.isErr = payload;
         },
+
+        delDocsRequest: (state, { payload }) => {
+            state.isDel = false;
+            state.isLoading = true;
+            state.isErr = null;
+        },
+        delDocsSuccess: (state) => {
+            state.isLoading = false;
+            state.isDel = true;
+        },
+        delDocsFailure: (state, { payload }) => {
+            state.isDel = false;
+            state.isLoading = false;
+            state.isErr = payload;
+        },
     },
 });
 
@@ -86,6 +103,9 @@ export const {
     getDocsRequest,
     getDocsSuccess,
     getDocsFailure,
+    delDocsRequest,
+    delDocsSuccess,
+    delDocsFailure,
 } = docs.actions;
 
 export default docs.reducer;
