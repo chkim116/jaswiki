@@ -3,6 +3,7 @@ import { HYDRATE } from "next-redux-wrapper";
 import auth from "./auth";
 import docs from "./docs";
 import write from "./write";
+import commonLoading from "./commonLoading";
 
 const rootReducer = (state: any, action: any) => {
     switch (action.type) {
@@ -13,6 +14,7 @@ const rootReducer = (state: any, action: any) => {
                 auth,
                 docs,
                 write,
+                commonLoading,
             });
             return combineReducer(state, action);
         }

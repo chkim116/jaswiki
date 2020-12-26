@@ -6,6 +6,8 @@ import { SelectValue } from "antd/lib/select";
 import { useDispatch, useSelector } from "react-redux";
 import { WriteRequest } from "../../redux/write";
 import { RootState } from "../../redux";
+import { usePush } from "../../hook";
+import { loadRequest } from "../../redux/commonLoading";
 
 const addMark = (
     text: string,
@@ -77,9 +79,12 @@ const index = () => {
     const [startText, setStartText] = useState<number>(0);
     const [endText, setEndText] = useState<number>(0);
     const [title, onChangeTitle] = useInput("");
+    const [isSubmit, setIsSubmit] = useState(false);
     const dispatch = useDispatch();
     const { user } = useSelector((state: RootState) => state.auth);
-
+    const { isDone, detailRouter } = useSelector(
+        (state: RootState) => state.write
+    );
     const editor = useRef<HTMLTextAreaElement>(null);
     const onChangeDesc = useCallback(
         (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -162,11 +167,13 @@ const index = () => {
             title,
             description: desc,
             content: marked(text),
-            creator: { userId: "id", level: 3 },
+            creator: user._id,
             stack,
         };
+        setIsSubmit(() => true);
         dispatch(WriteRequest(submit));
-    }, [text, title, desc, stack]);
+        dispatch(loadRequest());
+    }, [text, title, desc, stack, user]);
 
     // 적용되는 기술 스택
     const stackList = [
@@ -203,6 +210,9 @@ const index = () => {
             type: 0,
         },
     ];
+
+    // 글작성완료시 디테일페이지로이동`
+    usePush(isDone && isSubmit, `/docs/${detailRouter}`);
 
     return (
         <>

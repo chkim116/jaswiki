@@ -5,6 +5,7 @@ import RegisterForm from "../../components/register/RegisterForm";
 import { usePush } from "../../hook";
 import { RootState } from "../../redux";
 import { registerRequest } from "../../redux/auth";
+import { loadRequest } from "../../redux/commonLoading";
 
 const register = () => {
     const [form, onFormChange] = useFormInput();
@@ -13,9 +14,10 @@ const register = () => {
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
+            dispatch(loadRequest());
             dispatch(registerRequest(form));
         },
-        [form]
+        [form, dispatch]
     );
 
     usePush(isLogin, "/");

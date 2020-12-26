@@ -5,6 +5,7 @@ import LoginForm from "../../components/login/LoginForm";
 import { usePush } from "../../hook";
 import { RootState } from "../../redux";
 import { loginRequest } from "../../redux/auth";
+import { loadRequest } from "../../redux/commonLoading";
 
 const login = () => {
     const [form, onFormChange] = useFormInput();
@@ -13,9 +14,10 @@ const login = () => {
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
+            dispatch(loadRequest());
             dispatch(loginRequest(form));
         },
-        [form]
+        [form, dispatch]
     );
 
     usePush(isLogin, "/");

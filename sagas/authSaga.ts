@@ -16,6 +16,7 @@ import {
 import Axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { SignPayload } from "../@types/type";
+import { loadFailure, loadSuccess } from "../redux/commonLoading";
 
 function login(data: SignPayload) {
     return Axios.post("/user", data).then((res) => res.data);
@@ -36,13 +37,11 @@ function auth() {
 function* postLogin({ payload }: PayloadAction<SignPayload>) {
     try {
         const user = yield call(login, payload);
-        console.log(user);
-        document.cookie = `x_auth=${user.token}; max-age=604800; samesite=lax`;
-        yield put(loginSuccess());
-
+        yield put(loadSuccess());
         yield put(getAuthSuccess(user));
     } catch (err) {
         console.error(err);
+        yield put(loadFailure());
         yield put(loginFailure("아이디나 비밀번호를 다시 확인해 주세요"));
     }
 }
@@ -50,7 +49,6 @@ function* postLogin({ payload }: PayloadAction<SignPayload>) {
 function* postLogout() {
     try {
         yield call(logout);
-        document.cookie = `x_auth=; max-age=-1`;
         yield put(logoutSuccess());
     } catch (err) {
         console.error(err);
@@ -61,7 +59,6 @@ function* postLogout() {
 function* postRegister({ payload }: PayloadAction<SignPayload>) {
     try {
         const user = yield call(register, payload);
-        document.cookie = `x_auth=${user.token}; max-age=604800; samesite=lax`;
         yield put(registerSuccess());
         yield put(getAuthSuccess(user));
     } catch (err) {
@@ -69,6 +66,7 @@ function* postRegister({ payload }: PayloadAction<SignPayload>) {
         yield put(
             registerFailure("회원가입에 실패하였습니다. 다시 확인해 주세요")
         );
+        yield put(loadFailure());
     }
 }
 function* getAuth() {

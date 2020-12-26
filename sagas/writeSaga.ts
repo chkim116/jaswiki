@@ -3,6 +3,7 @@ import { WriteRequest, WriteSuccess, WriteFailure } from "../redux/write";
 import Axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { WritePayload } from "../@types/type";
+import { loadFailure } from "../redux/commonLoading";
 
 function writeDocument(data: WritePayload) {
     return Axios.post("/docs/post", data).then((res) => res.data);
@@ -15,6 +16,7 @@ function* postWrite({ payload }: PayloadAction<WritePayload>) {
     } catch (err) {
         console.error(err);
         yield put(WriteFailure(err));
+        yield put(loadFailure());
     }
 }
 
