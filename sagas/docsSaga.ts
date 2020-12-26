@@ -19,8 +19,8 @@ function getDoc() {
 }
 
 function* getById({ payload }: PayloadAction<string>) {
-    const docById = yield call(getDocById, payload);
     try {
+        const docById = yield call(getDocById, payload);
         yield put(getDocByIdSuccess(docById));
     } catch (err) {
         console.error(err);
@@ -28,8 +28,8 @@ function* getById({ payload }: PayloadAction<string>) {
     }
 }
 function* getDocs() {
-    const docs = yield call(getDoc);
     try {
+        const docs = yield call(getDoc);
         yield put(getDocsSuccess(docs));
     } catch (err) {
         console.error(err);

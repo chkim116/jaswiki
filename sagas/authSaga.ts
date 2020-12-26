@@ -3,6 +3,9 @@ import {
     loginRequest,
     loginSuccess,
     loginFailure,
+    logoutRequest,
+    logoutSuccess,
+    logoutFailure,
     registerRequest,
     registerSuccess,
     registerFailure,
@@ -18,6 +21,10 @@ function login(data: SignPayload) {
     return Axios.post("/user", data).then((res) => res.data);
 }
 
+function logout() {
+    return Axios.get("/user/logout").then((res) => res.data);
+}
+
 function register(data: SignPayload) {
     return Axios.post("/user/register", data).then((res) => res.data);
 }
@@ -27,37 +34,59 @@ function auth() {
 }
 
 function* postLogin({ payload }: PayloadAction<SignPayload>) {
-    const user = yield call(login, payload);
     try {
+        const user = yield call(login, payload);
+        console.log(user);
+        document.cookie = `x_auth=${user.token}; max-age=604800; samesite=lax`;
         yield put(loginSuccess());
+
         yield put(getAuthSuccess(user));
     } catch (err) {
         console.error(err);
-        yield put(loginFailure(err));
+        yield put(loginFailure("아이디나 비밀번호를 다시 확인해 주세요"));
     }
 }
-function* postRegister({ payload }: PayloadAction<SignPayload>) {
-    const user = yield call(register, payload);
+
+function* postLogout() {
     try {
+        yield call(logout);
+        document.cookie = `x_auth=; max-age=-1`;
+        yield put(logoutSuccess());
+    } catch (err) {
+        console.error(err);
+        yield put(logoutFailure("로그아웃 실패"));
+    }
+}
+
+function* postRegister({ payload }: PayloadAction<SignPayload>) {
+    try {
+        const user = yield call(register, payload);
+        document.cookie = `x_auth=${user.token}; max-age=604800; samesite=lax`;
         yield put(registerSuccess());
         yield put(getAuthSuccess(user));
     } catch (err) {
         console.error(err);
-        yield put(registerFailure(err));
+        yield put(
+            registerFailure("회원가입에 실패하였습니다. 다시 확인해 주세요")
+        );
     }
 }
 function* getAuth() {
-    const user = yield call(auth);
     try {
+        const user = yield call(auth);
         yield put(getAuthSuccess(user));
     } catch (err) {
         console.error(err);
-        yield put(getAuthFailure(err));
+        yield put(getAuthFailure("유저 정보 X"));
     }
 }
 
 function* watchLogin() {
     yield takeLatest(loginRequest, postLogin);
+}
+
+function* watchLogout() {
+    yield takeLatest(logoutRequest, postLogout);
 }
 
 function* watchRegister() {
@@ -69,5 +98,10 @@ function* watchAuth() {
 }
 
 export default function* authSaga() {
-    yield all([fork(watchLogin), fork(watchRegister), fork(watchAuth)]);
+    yield all([
+        fork(watchLogin),
+        fork(watchLogout),
+        fork(watchRegister),
+        fork(watchAuth),
+    ]);
 }

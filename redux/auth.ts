@@ -7,7 +7,7 @@ type AuthState = {
     isLoginErr: string | null;
     isRegister: boolean;
     isRegisterErr: string | null;
-    user: user;
+    user: user | null;
 };
 
 const authState: AuthState = {
@@ -40,6 +40,21 @@ const auth = createSlice({
             state.isLogin = true;
         },
         loginFailure: (state, { payload }) => {
+            state.isLogin = false;
+            state.isLoading = false;
+            state.isLoginErr = payload;
+        },
+
+        logoutRequest: (state) => {
+            state.isLoading = true;
+            state.isLoginErr = null;
+        },
+        logoutSuccess: (state) => {
+            state.isLoading = false;
+            state.isLogin = false;
+            state.user = null;
+        },
+        logoutFailure: (state, { payload }) => {
             state.isLogin = false;
             state.isLoading = false;
             state.isLoginErr = payload;
@@ -82,6 +97,9 @@ export const {
     loginRequest,
     loginSuccess,
     loginFailure,
+    logoutRequest,
+    logoutSuccess,
+    logoutFailure,
     registerRequest,
     registerSuccess,
     registerFailure,

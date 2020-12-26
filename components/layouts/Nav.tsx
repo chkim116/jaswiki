@@ -71,6 +71,8 @@ const UserBadge = styled.div`
 `;
 
 type Props = {
+    isLogin: boolean;
+    onLogOut: () => void;
     onSearch: (
         value: string,
         event?:
@@ -80,7 +82,7 @@ type Props = {
     ) => void;
 };
 
-const Nav = ({ onSearch }: Props) => {
+const Nav = ({ onSearch, isLogin, onLogOut }: Props) => {
     return (
         <Container>
             <Navigation>
@@ -109,14 +111,25 @@ const Nav = ({ onSearch }: Props) => {
                         </Link>
                         <Badge count={0}>
                             <Avatar shape="square" icon={<UserOutlined />} />
-                            <ul>
-                                <Link href="/register">
-                                    <li>계정 생성</li>
-                                </Link>
-                                <Link href="/login">
-                                    <li>로그인</li>
-                                </Link>
-                            </ul>
+                            {isLogin ||
+                            (process.browser &&
+                                document.cookie.includes("x_auth")) ? (
+                                <ul>
+                                    <Link href="/contribute">
+                                        <li>기여도</li>
+                                    </Link>
+                                    <li onClick={onLogOut}>로그아웃</li>
+                                </ul>
+                            ) : (
+                                <ul>
+                                    <Link href="/register">
+                                        <li>계정 생성</li>
+                                    </Link>
+                                    <Link href="/login">
+                                        <li>로그인</li>
+                                    </Link>
+                                </ul>
+                            )}
                         </Badge>
                     </UserBadge>
                 </List>

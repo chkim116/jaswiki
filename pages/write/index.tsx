@@ -166,7 +166,6 @@ const index = () => {
             stack,
         };
         dispatch(WriteRequest(submit));
-        console.log(submit);
     }, [text, title, desc, stack]);
 
     // 적용되는 기술 스택
