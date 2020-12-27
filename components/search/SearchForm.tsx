@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Skeleton } from "antd";
 import EmptyDataComponent from "../common/EmptyData";
 import { doc } from "../../@types/type";
-import { useLevelIcon } from "../../hook";
+import { levelIconChange } from "../../lib";
 
 const SearchContainer = styled.div`
     width: 100%;
@@ -67,7 +67,7 @@ const SearchForm = ({ searchText, loading, data }: Props) => {
                                         <div>
                                             <p>{doc.description}</p>
                                             <span>
-                                                {useLevelIcon(
+                                                {levelIconChange(
                                                     doc.creator.level
                                                 )}{" "}
                                                 {doc.creator.userId}

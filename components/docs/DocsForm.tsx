@@ -5,7 +5,7 @@ import Link from "next/link";
 import DocsDetailComponent from "../common/DocsDetailComponent";
 import { doc } from "../../@types/type";
 import StackComponent from "../common/StackComponent";
-import { useLevelIcon } from "../../hook";
+import { levelIconChange } from "../../lib";
 import { Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import DocsSkeleton from "../common/skeleton/DocsSkeleton";
@@ -119,7 +119,7 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                             <div>
                                 <div>🕑 {doc.createDate} </div>
                                 <div>
-                                    {useLevelIcon(doc.creator.level)}
+                                    {levelIconChange(doc.creator.level)}
                                     {doc.creator.userId}
                                 </div>
                             </div>
@@ -140,7 +140,7 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                         <div>
                             <div>생성자</div>
                             <span>
-                                {useLevelIcon(doc.creator.level)}{" "}
+                                {levelIconChange(doc.creator.level)}{" "}
                                 {doc.creator.userId}
                             </span>
                         </div>
@@ -148,7 +148,7 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                             <div>
                                 <div>최근 수정</div>
                                 <span>
-                                    {useLevelIcon(doc.recentCreator.level)}
+                                    {levelIconChange(doc.recentCreator.level)}
                                     {doc.recentCreator.userId} /
                                     {doc.recentUpdate}
                                 </span>
@@ -159,7 +159,8 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                             <span>
                                 {doc.contributer.map((con) => (
                                     <span key={con.userId}>
-                                        {useLevelIcon(con.level)} {con.userId}
+                                        {levelIconChange(con.level)}{" "}
+                                        {con.userId}
                                     </span>
                                 ))}
                             </span>
