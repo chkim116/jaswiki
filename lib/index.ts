@@ -1,23 +1,23 @@
 import { message } from "antd";
-import { useEffect } from "react";
+import Axios from "axios";
 
 export const addMark = (
     text: string,
     start: number,
     end: number,
     toolbar: string,
-    inline: string
+    inline: string,
+    img?: string
 ): string => {
     const startText = text.slice(0, start);
     const curText = text.slice(start, end);
     const restText = text.slice(end, text.length);
 
-    // 툴바가 이미지일시
-    if (toolbar.includes("img")) {
-        console.log("준비중입니다");
-        return "";
+    if (toolbar === "img") {
+        console.log(img);
+        const newText = `${startText}\n![](${img})\n${curText}${restText}`;
+        return newText;
     }
-
     // 툴바가 헤더일시
     if (toolbar.includes("#")) {
         const newText = `${startText} ${toolbar} ${curText}${restText}`;

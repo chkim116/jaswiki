@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FcAddImage, FcLink, FcList } from "react-icons/fc";
 import { GrBlockQuote } from "react-icons/gr";
 import { IoCodeWorkingOutline } from "react-icons/io5";
@@ -31,9 +31,15 @@ const Toolbar = styled.div`
 
 type Props = {
     onHeader: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    onClickImg: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const ToolbarComponent = ({ onHeader }: Props) => {
+const ToolbarComponent = ({ onHeader, onClickImg }: Props) => {
+    const imgInput = useRef<HTMLInputElement>(null!);
+    const onHideInput = () => {
+        imgInput.current.click();
+    };
+
     return (
         <Toolbar>
             <button type="button" data-toolbar="#" onClick={onHeader}>
@@ -83,10 +89,15 @@ const ToolbarComponent = ({ onHeader }: Props) => {
             <button type="button" data-toolbar="[]()" onClick={onHeader}>
                 <FcLink />
             </button>
-            <button type="button" data-toolbar="img" onClick={onHeader}>
+            <button type="button" onClick={onHideInput}>
                 <FcAddImage />
             </button>
-            <input type="file" accept="image/*" hidden />
+            <input
+                type="file"
+                accept="image/*"
+                hidden
+                ref={imgInput}
+                onChange={onClickImg}></input>
         </Toolbar>
     );
 };

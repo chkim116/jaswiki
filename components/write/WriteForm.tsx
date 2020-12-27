@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { ContentDetail } from "../common/DocsDetailComponent";
 import { Select } from "antd";
@@ -14,6 +14,7 @@ import { RootState } from "../../redux";
 import { doc } from "../../@types/type";
 import { addMark, stackList } from "../../lib";
 import marked from "marked";
+import Axios from "axios";
 
 const WriteContainer = styled.div`
     width: 100%;
@@ -129,6 +130,7 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
     );
 
     const editor = useRef<HTMLTextAreaElement>(null);
+
     const onChangeDesc = useCallback(
         (e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setDesc(e.target.value);
@@ -159,6 +161,29 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
                 lnline as string
             );
             setText(newText);
+        },
+        [text, startText, endText]
+    );
+
+    // 툴바가 이미지일시
+    const onClickImg = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file: any = e.currentTarget.files;
+            const formData = new FormData();
+            formData.append("image", file[0]);
+
+            // 이미지 api
+            const postImg = async () => {
+                const img = await Axios.post("/docs/img", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }).then((res) => res.data);
+                setText(() =>
+                    addMark(text, startText, endText, "img", "", img)
+                );
+            };
+            postImg();
         },
         [text, startText, endText]
     );
@@ -246,7 +271,10 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
                         value={desc}
                         onChange={onChangeDesc}
                         placeholder="문서의 설명을 입력하세요."></Description>
-                    <ToolbarComponent onHeader={onHeader} />
+                    <ToolbarComponent
+                        onHeader={onHeader}
+                        onClickImg={onClickImg}
+                    />
                     <Editor
                         id="editor"
                         onKeyUp={onKeyUp}
