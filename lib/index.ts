@@ -1,3 +1,6 @@
+import { message } from "antd";
+import { useEffect } from "react";
+
 export const addMark = (
     text: string,
     start: number,
@@ -43,7 +46,7 @@ export const addMark = (
         }
         // 만약 툴바가 ```라면 js를 넣어 변환
         if (toolbar === "```") {
-            const newText = `${startText} ${toolbar}js\n${curText}\n${toolbar} ${restText}`;
+            const newText = `${startText}${toolbar}js\n${curText}\n${toolbar}${restText}`;
             return newText;
         }
         // 인라인인데, 선택한 텍스트가 있을 때
@@ -52,7 +55,12 @@ export const addMark = (
     } else {
         // 툴바가 리스트고, > 일때
         if (toolbar === "-" || toolbar.includes(">")) {
-            const newText = `${startText}${curText}\n${toolbar} ${restText}`;
+            if (curText) {
+                const newText = `${startText}\n${toolbar} ${curText}\n${restText}`;
+                return newText;
+            }
+
+            const newText = `${startText}\n${toolbar}\n${restText}`;
             return newText;
         }
         // 툴바가 이미지도, 헤더도, 인라인도 아닐시
@@ -91,6 +99,7 @@ const setIcon = [
         levelIcon: "🧞",
     },
 ];
+
 export const levelIconChange = (userLevel: number) => {
     if (process.browser && userLevel) {
         const icon = setIcon.filter((grade) => grade.level === userLevel);
@@ -133,3 +142,7 @@ export const stackList = [
         value: 0,
     },
 ];
+
+export const alertErr = (text: string) => {
+    return message.error(text);
+};

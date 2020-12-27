@@ -17,6 +17,7 @@ import Axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { SignPayload } from "../@types/type";
 import { loadFailure, loadSuccess } from "../redux/commonLoading";
+import { alertErr } from "../lib";
 
 function login(data: SignPayload) {
     return Axios.post("/user", data).then((res) => res.data);
@@ -42,7 +43,8 @@ function* postLogin({ payload }: PayloadAction<SignPayload>) {
     } catch (err) {
         console.error(err);
         yield put(loadFailure());
-        yield put(loginFailure("아이디나 비밀번호를 다시 확인해 주세요"));
+        yield put(loginFailure(err.message));
+        yield alertErr("아이디와 비밀번호를 다시 확인해 주세요.");
     }
 }
 
@@ -52,7 +54,8 @@ function* postLogout() {
         yield put(logoutSuccess());
     } catch (err) {
         console.error(err);
-        yield put(logoutFailure("로그아웃 실패"));
+        yield put(logoutFailure(err.message));
+        yield alertErr("로그아웃 실패");
     }
 }
 
@@ -63,9 +66,8 @@ function* postRegister({ payload }: PayloadAction<SignPayload>) {
         yield put(getAuthSuccess(user));
     } catch (err) {
         console.error(err);
-        yield put(
-            registerFailure("회원가입에 실패하였습니다. 다시 확인해 주세요")
-        );
+        yield put(registerFailure(err.message));
+        yield alertErr("회원가입에 실패하였습니다. 다시 확인해 주세요");
         yield put(loadFailure());
     }
 }

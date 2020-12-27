@@ -23,9 +23,9 @@ const docsState: DocsState = {
         createDate: "",
         recentUpdate: "",
         stack: [0],
-        creator: { userId: "", level: 0, id: "" },
-        recentCreator: { userId: "", level: 0, id: "" },
-        contributer: [{ userId: "", level: 0, id: "" }],
+        creator: { userId: "", level: 0, _id: "" },
+        recentCreator: { userId: "", level: 0, _id: "" },
+        contributer: [{ userId: "", level: 0, _id: "" }],
     },
     docs: [
         {
@@ -36,9 +36,9 @@ const docsState: DocsState = {
             createDate: "",
             recentUpdate: "",
             stack: [],
-            creator: { userId: "", level: 0, id: "" },
-            recentCreator: { userId: "", level: 0, id: "" },
-            contributer: [{ userId: "", level: 0, id: "" }],
+            creator: { userId: "", level: 0, _id: "" },
+            recentCreator: { userId: "", level: 0, _id: "" },
+            contributer: [{ userId: "", level: 0, _id: "" }],
         },
     ],
 };

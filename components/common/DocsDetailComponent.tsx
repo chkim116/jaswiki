@@ -60,7 +60,7 @@ export const ContentDetail = styled.div`
     }
 
     pre {
-        background-color: ${(props) => props.theme.darkWhite};
+        background-color: #fafbfc;
         overflow: auto;
         padding: 8px;
         margin: 5px 0;
@@ -71,9 +71,10 @@ type Props = {
     content: string;
     description: string;
     anchor: string[];
+    node: any;
 };
 
-const DocsDetailComponent = ({ content, description, anchor }: Props) => {
+const DocsDetailComponent = ({ content, description, anchor, node }: Props) => {
     return (
         <Content>
             <ContentDesc>
@@ -90,7 +91,13 @@ const DocsDetailComponent = ({ content, description, anchor }: Props) => {
                         {anchor.map((word) => (
                             <Anchor.Link
                                 key={word}
-                                href={`#${useReplace(word).replace(/ /g, "-")}`}
+                                href={`#${useReplace(word)
+                                    .replace(
+                                        /[\!\@\#\$\%\^\&\*\(\)\_\+\?\.\,\_\=\~\`\/\*\-\+]+/g,
+                                        ""
+                                    )
+                                    .replace(/ /g, "-")
+                                    .toLowerCase()}`}
                                 title={useReplace(word)}></Anchor.Link>
                         ))}
                     </BookAnchor>
@@ -98,6 +105,7 @@ const DocsDetailComponent = ({ content, description, anchor }: Props) => {
             </ContentDesc>
 
             <ContentDetail
+                ref={node}
                 dangerouslySetInnerHTML={{ __html: content }}></ContentDetail>
         </Content>
     );

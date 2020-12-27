@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { ContentDetail } from "../common/DocsDetailComponent";
 import { Select } from "antd";
 import { SelectValue } from "antd/lib/select";
 const { Option } = Select;
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import ToolbarComponent from "./ToolbarComponent";
 import { useInput } from "@cooksmelon/event";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +13,7 @@ import { usePush } from "../../hook";
 import { RootState } from "../../redux";
 import { doc } from "../../@types/type";
 import { addMark, stackList } from "../../lib";
+import marked from "marked";
 
 const WriteContainer = styled.div`
     width: 100%;
@@ -107,18 +106,6 @@ const SelectStack = styled(Select)`
     }
 `;
 
-const renderers = {
-    code: ({ language, value }: { language: string; value: string }) => {
-        return value === undefined ? (
-            <> </>
-        ) : (
-            <SyntaxHighlighter
-                children={value}
-                language={language}></SyntaxHighlighter>
-        );
-    },
-};
-
 type Props = {
     isEdit?: boolean;
     doc?: doc;
@@ -140,8 +127,6 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
     const { isDone, detailRouter } = useSelector(
         (state: RootState) => state.write
     );
-
-    useEffect(() => {}, []);
 
     const editor = useRef<HTMLTextAreaElement>(null);
     const onChangeDesc = useCallback(
@@ -291,11 +276,10 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
 
                 <Preview className="editor__container">
                     <h1>{title ? title : "문서 제목을 입력바랍니다."}</h1>
-                    <ContentDetail>
-                        <ReactMarkdown renderers={renderers}>
-                            {text}
-                        </ReactMarkdown>
-                    </ContentDetail>
+                    <ContentDetail
+                        dangerouslySetInnerHTML={{
+                            __html: marked(text),
+                        }}></ContentDetail>
                 </Preview>
             </WriteContainer>
 

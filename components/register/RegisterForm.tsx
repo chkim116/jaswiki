@@ -15,6 +15,10 @@ export const SignContainer = styled.div`
         padding: 60px 0;
         font-weight: 600;
     }
+
+    a {
+        color: ${(props) => props.theme.link};
+    }
 `;
 
 export const Form = styled.form`

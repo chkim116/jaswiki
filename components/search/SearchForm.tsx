@@ -61,8 +61,8 @@ const SearchForm = ({ searchText, loading, data }: Props) => {
                             <SearchList>
                                 {data?.map((doc) => (
                                     <SearchContent>
-                                        <Link href={`/doc/${doc._id}`}>
-                                            <a>검색목록</a>
+                                        <Link href={`/docs/${doc._id}`}>
+                                            <a>{doc.title}</a>
                                         </Link>
                                         <div>
                                             <p>{doc.description}</p>

@@ -10,14 +10,18 @@ import { loadRequest } from "../../redux/commonLoading";
 const register = () => {
     const [form, onFormChange] = useFormInput();
     const dispatch = useDispatch();
-    const { isLogin } = useSelector((state: RootState) => state.auth);
+    const { isLogin, isRegisterErr } = useSelector(
+        (state: RootState) => state.auth
+    );
+
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             dispatch(loadRequest());
             dispatch(registerRequest(form));
         },
-        [form, dispatch]
+
+        [form, dispatch, isRegisterErr]
     );
 
     usePush(isLogin, "/");

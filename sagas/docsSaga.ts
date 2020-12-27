@@ -15,8 +15,8 @@ function getDoc() {
     return Axios.get("/docs").then((res) => res.data);
 }
 
-function delDoc(id: string) {
-    return Axios.delete(`/docs/del/${id}`);
+function delDoc(payload: { router: string; _id: string }) {
+    return Axios.delete(`/docs/del/${payload.router}/${payload._id}`);
 }
 
 function* getDocs() {
@@ -30,7 +30,7 @@ function* getDocs() {
     }
 }
 
-function* delDocs({ payload }: PayloadAction<string>) {
+function* delDocs({ payload }: PayloadAction<{ router: string; _id: string }>) {
     try {
         yield call(delDoc, payload);
         yield put(delDocsSuccess());

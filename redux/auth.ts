@@ -17,7 +17,7 @@ const authState: AuthState = {
     isRegister: false,
     isRegisterErr: null,
     user: {
-        id: "",
+        _id: "",
         userId: "",
         level: 1,
         contribute: 0,

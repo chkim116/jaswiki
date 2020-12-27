@@ -32,3 +32,28 @@ h1,
 h2 {
     font-weight: 600;
 }
+
+.hljs-keyword {
+    color: #eb7138;
+}
+
+.hljs-string {
+    color: #ae422f;
+}
+
+.hljs-function {
+    color: #981656;
+}
+
+.hljs-comment {
+    color: #6d6d6d;
+    opacity: 0.8;
+}
+
+.hljs-built_in {
+    color: #6184c6;
+}
+
+.hljs-regexp {
+    color: #314169;
+}

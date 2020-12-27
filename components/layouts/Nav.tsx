@@ -100,7 +100,7 @@ const Nav = ({ onSearch, isLogin, onLogOut }: Props) => {
                         <Input.Search
                             onSearch={onSearch}
                             size="large"
-                            placeholder="검색하세요"
+                            placeholder="다양한 예제들을 검색하세요"
                             enterButton
                         />
                     </div>

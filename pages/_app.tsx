@@ -44,6 +44,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, []);
 
     const onLogOut = useCallback(() => {
+        router.push("/");
         dispatch(logoutRequest());
     }, []);
 

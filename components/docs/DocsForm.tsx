@@ -75,12 +75,13 @@ const Del = styled.a`
 
 type Props = {
     doc: doc;
-    id?: string;
+    _id?: string;
     anchor: string[];
     onDelete: () => void;
+    node: any;
 };
 
-const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
+const DocsForm = ({ doc, _id, onDelete, anchor, node }: Props) => {
     return (
         <>
             {doc ? (
@@ -100,10 +101,8 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                                 <Link href={`/edit/${doc._id}`}>
                                     <a>편집</a>
                                 </Link>
-                                <Link href="/">
-                                    <a>문서정보</a>
-                                </Link>
-                                {id === doc.creator.id && (
+
+                                {_id === doc.creator._id && (
                                     <Popconfirm
                                         title="정말 삭제인가요? 다시 복구 하지 못합니다!"
                                         icon={
@@ -127,6 +126,7 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                     </StackDetail>
 
                     <DocsDetailComponent
+                        node={node}
                         anchor={anchor}
                         content={marked(doc.content)}
                         description={doc.description}
@@ -146,9 +146,9 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                         </div>
                         {doc.recentCreator.userId && (
                             <div>
-                                <div>최근 수정</div>
+                                <div>최근수정자</div>
                                 <span>
-                                    {levelIconChange(doc.recentCreator.level)}
+                                    {levelIconChange(doc.recentCreator.level)}{" "}
                                     {doc.recentCreator.userId} /
                                     {doc.recentUpdate}
                                 </span>
@@ -158,10 +158,10 @@ const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
                             <div>기여자</div>
                             <span>
                                 {doc.contributer.map((con) => (
-                                    <span key={con.userId}>
+                                    <div key={con.userId}>
                                         {levelIconChange(con.level)}{" "}
                                         {con.userId}
-                                    </span>
+                                    </div>
                                 ))}
                             </span>
                         </div>
