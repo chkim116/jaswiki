@@ -8,7 +8,6 @@ export const usePush = (value: any, route: string) => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (value) {
-            console.log(value);
             router.push(route);
             dispatch(loadSuccess());
         }

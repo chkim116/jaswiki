@@ -4,6 +4,8 @@ import { Title } from "../../styles/commonStyles";
 import Link from "next/link";
 import { Skeleton } from "antd";
 import EmptyDataComponent from "../common/EmptyData";
+import { doc } from "../../@types/type";
+import { useLevelIcon } from "../../hook";
 
 const SearchContainer = styled.div`
     width: 100%;
@@ -41,38 +43,38 @@ const SearchContent = styled.div`
 type Props = {
     searchText: string | string[] | undefined;
     loading: boolean;
+    data: doc[];
 };
 
-const SearchForm = ({ searchText, loading }: Props) => {
+const SearchForm = ({ searchText, loading, data }: Props) => {
     return (
         <SearchContainer>
             <Title>Results : {searchText}</Title>
 
-            {loading ? (
+            {!loading ? (
                 <div>
-                    {searchText ? (
+                    {data?.length > 0 ? (
                         <>
                             <IsSearchTitle>
-                                1,138개의 게시글을 찾았습니다.
+                                {data.length}개의 게시글을 찾았습니다.
                             </IsSearchTitle>
                             <SearchList>
-                                <SearchContent>
-                                    <Link href="/docs/3">
-                                        <a>검색목록</a>
-                                    </Link>
-                                    <div>
-                                        <p>
-                                            Lorem ipsum, dolor sit amet
-                                            consectetur adipisicing elit. Ipsa
-                                            cum aut maiores eius, omnis mollitia
-                                            reiciendis consequatur dicta modi
-                                            repudiandae fuga! Temporibus eos
-                                            deleniti laboriosam officia sit
-                                            dolore iure omnis!
-                                        </p>
-                                        <span>생성자</span>
-                                    </div>
-                                </SearchContent>
+                                {data?.map((doc) => (
+                                    <SearchContent>
+                                        <Link href={`/doc/${doc._id}`}>
+                                            <a>검색목록</a>
+                                        </Link>
+                                        <div>
+                                            <p>{doc.description}</p>
+                                            <span>
+                                                {useLevelIcon(
+                                                    doc.creator.level
+                                                )}{" "}
+                                                {doc.creator.userId}
+                                            </span>
+                                        </div>
+                                    </SearchContent>
+                                ))}
                             </SearchList>
                         </>
                     ) : (

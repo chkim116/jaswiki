@@ -35,9 +35,30 @@ const write = createSlice({
             state.isLoading = false;
             state.isErr = payload;
         },
+        updateRequest: (state, { payload }) => {
+            state.isDone = false;
+            state.isLoading = true;
+            state.isErr = null;
+        },
+        updateSuccess: (state) => {
+            state.isLoading = false;
+            state.isDone = true;
+        },
+        updateFailure: (state, { payload }) => {
+            state.isDone = false;
+            state.isLoading = false;
+            state.isErr = payload;
+        },
     },
 });
 
-export const { WriteRequest, WriteSuccess, WriteFailure } = write.actions;
+export const {
+    WriteRequest,
+    WriteSuccess,
+    WriteFailure,
+    updateRequest,
+    updateSuccess,
+    updateFailure,
+} = write.actions;
 
 export default write.reducer;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Anchor } from "antd";
 import { useReplace } from "@cooksmelon/utils";
@@ -70,10 +70,10 @@ export const ContentDetail = styled.div`
 type Props = {
     content: string;
     description: string;
+    anchor: string[];
 };
 
-const DocsDetailComponent = ({ content, description }: Props) => {
-    const head = content.match(/<([h][1-6])[^>]*>[가-힣\w\s']+<\/\1>/g);
+const DocsDetailComponent = ({ content, description, anchor }: Props) => {
     return (
         <Content>
             <ContentDesc>
@@ -84,13 +84,13 @@ const DocsDetailComponent = ({ content, description }: Props) => {
                             "<br />"
                         ),
                     }}></p>
-                {head && (
+                {anchor && (
                     <BookAnchor affix={false}>
                         <LinkTitle>목차</LinkTitle>
-                        {head.map((word) => (
+                        {anchor.map((word) => (
                             <Anchor.Link
                                 key={word}
-                                href={`#${useReplace(word)}`}
+                                href={`#${useReplace(word).replace(/ /g, "-")}`}
                                 title={useReplace(word)}></Anchor.Link>
                         ))}
                     </BookAnchor>

@@ -27,3 +27,8 @@ button {
 a:hover {
     text-decoration: underline;
 }
+
+h1,
+h2 {
+    font-weight: 600;
+}

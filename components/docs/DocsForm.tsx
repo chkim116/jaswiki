@@ -9,6 +9,7 @@ import { useLevelIcon } from "../../hook";
 import { Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import DocsSkeleton from "../common/skeleton/DocsSkeleton";
+import marked from "marked";
 
 const DocsContainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
@@ -75,10 +76,11 @@ const Del = styled.a`
 type Props = {
     doc: doc;
     id?: string;
+    anchor: string[];
     onDelete: () => void;
 };
 
-const DocsForm = ({ doc, id, onDelete }: Props) => {
+const DocsForm = ({ doc, id, onDelete, anchor }: Props) => {
     return (
         <>
             {doc ? (
@@ -95,7 +97,7 @@ const DocsForm = ({ doc, id, onDelete }: Props) => {
                         </div>
                         <DocsDesc>
                             <div>
-                                <Link href="/">
+                                <Link href={`/edit/${doc._id}`}>
                                     <a>편집</a>
                                 </Link>
                                 <Link href="/">
@@ -103,7 +105,7 @@ const DocsForm = ({ doc, id, onDelete }: Props) => {
                                 </Link>
                                 {id === doc.creator.id && (
                                     <Popconfirm
-                                        title="Are you sure？"
+                                        title="정말 삭제인가요? 다시 복구 하지 못합니다!"
                                         icon={
                                             <QuestionCircleOutlined
                                                 style={{ color: "red" }}
@@ -125,7 +127,8 @@ const DocsForm = ({ doc, id, onDelete }: Props) => {
                     </StackDetail>
 
                     <DocsDetailComponent
-                        content={doc.content}
+                        anchor={anchor}
+                        content={marked(doc.content)}
                         description={doc.description}
                     />
 
@@ -137,7 +140,7 @@ const DocsForm = ({ doc, id, onDelete }: Props) => {
                         <div>
                             <div>생성자</div>
                             <span>
-                                {useLevelIcon(doc.creator.level)}
+                                {useLevelIcon(doc.creator.level)}{" "}
                                 {doc.creator.userId}
                             </span>
                         </div>

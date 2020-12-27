@@ -27,6 +27,7 @@ export type SignPayload = {
 };
 
 export type WritePayload = {
+    id?: string;
     title: string;
     description: string;
     content: string;
