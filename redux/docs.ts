@@ -16,7 +16,7 @@ const docsState: DocsState = {
     isDel: false,
     isErr: null,
     doc: {
-        id: "",
+        _id: "",
         title: "",
         description: "",
         content: "",
@@ -29,7 +29,7 @@ const docsState: DocsState = {
     },
     docs: [
         {
-            id: "",
+            _id: "",
             title: "",
             description: "",
             content: "",
@@ -47,20 +47,10 @@ const docs = createSlice({
     name: "docs",
     initialState: docsState,
     reducers: {
-        getDocByIdRequest: (state, { payload }) => {
-            state.isDone = false;
-            state.isLoading = true;
-            state.isErr = null;
-        },
-        getDocByIdSuccess: (state, { payload }) => {
+        getDocById: (state, { payload }) => {
             state.isLoading = false;
             state.isDone = true;
             state.doc = payload;
-        },
-        getDocByIdFailure: (state, { payload }) => {
-            state.isDone = false;
-            state.isLoading = false;
-            state.isErr = payload;
         },
 
         getDocsRequest: (state) => {
@@ -97,9 +87,7 @@ const docs = createSlice({
 });
 
 export const {
-    getDocByIdRequest,
-    getDocByIdSuccess,
-    getDocByIdFailure,
+    getDocById,
     getDocsRequest,
     getDocsSuccess,
     getDocsFailure,

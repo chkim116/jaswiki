@@ -1,25 +1,15 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Title } from "../../styles/commonStyles";
-import { Empty, Button } from "antd";
 import Link from "next/link";
 import { Skeleton } from "antd";
+import EmptyDataComponent from "../common/EmptyData";
 
 const SearchContainer = styled.div`
     width: 100%;
     max-width: ${(props) => props.theme.maxWidth};
     margin: 0 auto;
     min-height: 80vh;
-`;
-
-const EmptyData = styled(Empty)`
-    margin-top: 100px;
-    p {
-        font-size: ${(props) => props.theme.ss};
-    }
-    button {
-        color: ${(props) => props.theme.white};
-    }
 `;
 
 const IsSearchTitle = styled.h3`
@@ -86,21 +76,12 @@ const SearchForm = ({ searchText, loading }: Props) => {
                             </SearchList>
                         </>
                     ) : (
-                        <EmptyData
-                            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                            imageStyle={{
-                                height: 60,
-                            }}
-                            description={
-                                <span>
-                                    문서가 존재하지 않습니다. 모두를 위해
-                                    작성해주실래요?
-                                </span>
-                            }>
-                            <Link href="/write">
-                                <Button type="primary">문서 작성</Button>
-                            </Link>
-                        </EmptyData>
+                        <EmptyDataComponent
+                            description="문서가 존재하지 않습니다. 모두를 위해
+                     작성해주실래요?"
+                            route="/write"
+                            routeName="문서작성"
+                        />
                     )}
                 </div>
             ) : (

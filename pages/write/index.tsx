@@ -8,6 +8,8 @@ import { WriteRequest } from "../../redux/write";
 import { RootState } from "../../redux";
 import { usePush } from "../../hook";
 import { loadRequest } from "../../redux/commonLoading";
+import { message } from "antd";
+import EmptyDataComponent from "../../components/common/EmptyData";
 
 const addMark = (
     text: string,
@@ -116,7 +118,7 @@ const index = () => {
     const [title, onChangeTitle] = useInput("");
     const [isSubmit, setIsSubmit] = useState(false);
     const dispatch = useDispatch();
-    const { user } = useSelector((state: RootState) => state.auth);
+    const { user, isLogin } = useSelector((state: RootState) => state.auth);
     const { isDone, detailRouter } = useSelector(
         (state: RootState) => state.write
     );
@@ -214,26 +216,33 @@ const index = () => {
     }, [text, title, desc, stack, user]);
 
     // 글작성완료시 디테일페이지로이동`
-    usePush(isDone && isSubmit, `/docs/${detailRouter}`);
-
+    usePush(isSubmit && isDone, `/docs/${detailRouter}`);
     return (
         <>
-            <WriteForm
-                // isEdit={isEdit}
-                onChangeDesc={onChangeDesc}
-                onStack={onStack}
-                onSubmit={onSubmit}
-                stackList={stackList}
-                onChangeTitle={onChangeTitle}
-                onChange={onChange}
-                onHeader={onHeader}
-                onSelect={onSelect}
-                onKeyUp={onKeyUp}
-                onKeyDown={onKeyDown}
-                text={text}
-                editor={editor}
-                title={title}
-            />
+            {!isLogin ? (
+                <EmptyDataComponent
+                    description="회원만 문서 작성이 가능합니다."
+                    route="/login"
+                    routeName="로그인하기"
+                />
+            ) : (
+                <WriteForm
+                    // isEdit={isEdit}
+                    onChangeDesc={onChangeDesc}
+                    onStack={onStack}
+                    onSubmit={onSubmit}
+                    stackList={stackList}
+                    onChangeTitle={onChangeTitle}
+                    onChange={onChange}
+                    onHeader={onHeader}
+                    onSelect={onSelect}
+                    onKeyUp={onKeyUp}
+                    onKeyDown={onKeyDown}
+                    text={text}
+                    editor={editor}
+                    title={title}
+                />
+            )}
         </>
     );
 };

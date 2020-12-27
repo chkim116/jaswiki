@@ -8,7 +8,7 @@ export type user = {
 };
 
 export type doc = {
-    id: string;
+    _id: string;
     title: string;
     description: string;
     content: string;

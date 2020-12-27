@@ -15,6 +15,7 @@ import { getAuthRequest, logoutRequest } from "../redux/auth";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import styled from "@emotion/styled";
+import Axios from "axios";
 
 const Loader = styled.div`
     width: 100%;
@@ -27,6 +28,8 @@ const Loader = styled.div`
 `;
 
 // 페이지의 공통
+Axios.defaults.baseURL = "http://localhost:4000";
+Axios.defaults.withCredentials = true;
 
 const App = ({ Component, pageProps }: AppProps) => {
     const { isLogin } = useSelector((state: RootState) => state.auth);

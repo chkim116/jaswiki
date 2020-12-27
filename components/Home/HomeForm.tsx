@@ -14,6 +14,10 @@ import {
 import styled from "@emotion/styled";
 import { DetailTitle, Title } from "../../styles/commonStyles";
 import Link from "next/link";
+import { doc } from "../../@types/type";
+import StackComponent from "../common/StackComponent";
+import DocsDetailComponent from "../common/DocsDetailComponent";
+import DocsSkeleton from "../common/skeleton/DocsSkeleton";
 
 const HomeContainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
@@ -70,7 +74,12 @@ const Community = styled.div`
     }
 `;
 
-const HomeForm = () => {
+type Props = {
+    docs: doc[];
+    isDone: boolean;
+};
+
+const HomeForm = ({ docs, isDone }: Props) => {
     return (
         <HomeContainer>
             <div>
@@ -102,27 +111,18 @@ const HomeForm = () => {
             </Stack>
             <Title>최근 등록 문서</Title>
             <NewFeed>
-                <Link href="/">
-                    <li>글 1</li>
-                </Link>
-                <Link href="/">
-                    <li>글 1</li>
-                </Link>
-                <Link href="/">
-                    <li>글 1</li>
-                </Link>
-                <Link href="/">
-                    <li>글 1</li>
-                </Link>
-                <Link href="/">
-                    <li>글 1</li>
-                </Link>
-                <Link href="/">
-                    <li>글 1</li>
-                </Link>
-                <Link href="/">
-                    <li>글 1</li>
-                </Link>
+                {isDone ? (
+                    docs.map((doc) => (
+                        <Link key={doc._id} href={`/docs/${doc._id}`}>
+                            <li>
+                                {doc.title}
+                                <StackComponent stack={doc.stack} size={12} />
+                            </li>
+                        </Link>
+                    ))
+                ) : (
+                    <DocsSkeleton />
+                )}
             </NewFeed>
             <DetailTitle>한줄잡담</DetailTitle>
             <Community>

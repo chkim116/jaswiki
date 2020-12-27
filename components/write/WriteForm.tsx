@@ -10,8 +10,9 @@ import ToolbarComponent from "./ToolbarComponent";
 
 const WriteContainer = styled.div`
     width: 100%;
-    max-width: ${(props) => props.theme.maxWidth};
+    max-width: 1400px;
     margin: 36px auto;
+    padding: 0 3px;
     display: flex;
     justify-content: center;
 `;
