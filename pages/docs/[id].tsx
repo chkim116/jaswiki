@@ -29,7 +29,7 @@ const index = () => {
             const html = marked(data.content);
             // 앵커 등록을 위한 replace
             const head = html.match(
-                /<([h][1])[^>]*>[ㄱ-ㅎ\ㅏ-ㅣ\가-힣\w\s\.\!\@\#\$\%\^\&\*\(\)\-\=\+\_\?\,\;\"\'\\\|\/\*']+<\/\1>/g
+                /<([h][1])[^>]*>[ㄱ-ㅎ\ㅏ-ㅣ\가-힣\w\s\.\!\@\#\$\%\^\&\*\(\)\-\=\+\_\?\,\;\"\'\\\|\/\*\~']+<\/\1>/g
             ) as string[];
             setAnchor(head);
             dispatch(getDocById(data));

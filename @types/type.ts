@@ -4,7 +4,7 @@ export type user = {
     level: number;
     contribute: number;
     email: string;
-    docs: string[];
+    docs: string[] | doc[];
 };
 
 export type doc = {

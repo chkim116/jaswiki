@@ -17,7 +17,7 @@ import Axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { SignPayload } from "../@types/type";
 import { loadFailure, loadSuccess } from "../redux/commonLoading";
-import { alertErr } from "../lib";
+import { alertErr } from "../lib/alertErr";
 
 function login(data: SignPayload) {
     return Axios.post("/user", data).then((res) => res.data);

@@ -32,7 +32,7 @@ Axios.defaults.baseURL = "http://localhost:4000";
 Axios.defaults.withCredentials = true;
 
 const App = ({ Component, pageProps }: AppProps) => {
-    const { isLogin } = useSelector((state: RootState) => state.auth);
+    const { isLogin, user } = useSelector((state: RootState) => state.auth);
     const { isCommonLoading } = useSelector(
         (state: RootState) => state.commonLoading
     );
@@ -65,6 +65,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                     onLogOut={onLogOut}
                     isLogin={isLogin}
                     onSearch={onSearch}
+                    id={user?._id}
                 />
                 <Component {...pageProps} />
                 {router.asPath === "/register" ||

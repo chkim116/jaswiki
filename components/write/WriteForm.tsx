@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { ContentDetail } from "../common/DocsDetailComponent";
 import { Select } from "antd";
@@ -27,7 +27,7 @@ const WriteContainer = styled.div`
 
 const EditorContainer = styled.div`
     min-height: 600px;
-    width: 55%;
+    width: 50%;
     input {
         all: unset;
         font-size: ${(props) => props.theme.xls};
@@ -77,7 +77,7 @@ const Preview = styled.div`
         margin-bottom: 6px;
         border-bottom: 1px solid ${(props) => props.theme.darkWhite};
     }
-    width: 45%;
+    width: 50%;
     max-height: 990px;
     min-height: 600px;
     border: 1px solid #dbdbdb;

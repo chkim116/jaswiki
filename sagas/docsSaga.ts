@@ -22,7 +22,6 @@ function delDoc(payload: { router: string; _id: string }) {
 function* getDocs() {
     try {
         const docs = yield call(getDoc);
-        console.log(docs);
         yield put(getDocsSuccess(docs));
     } catch (err) {
         console.error(err);

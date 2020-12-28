@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Anchor } from "antd";
 import { useReplace } from "@cooksmelon/utils";
@@ -22,6 +22,9 @@ const BookAnchor = styled(Anchor)`
     margin-bottom: 36px;
     @media all and (max-width: ${(props) => props.theme.desktop}) {
         margin: 0 auto;
+        width: 100%;
+        max-width: 96%;
+        min-height: 150px;
     }
 `;
 

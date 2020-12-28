@@ -5,7 +5,7 @@ import Link from "next/link";
 import DocsDetailComponent from "../common/DocsDetailComponent";
 import { doc } from "../../@types/type";
 import StackComponent from "../common/StackComponent";
-import { levelIconChange } from "../../lib";
+import { levelIconChange } from "../../lib/levelChange";
 import { Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import DocsSkeleton from "../common/skeleton/DocsSkeleton";
@@ -15,6 +15,10 @@ const DocsContainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
     width: 100%;
     margin: 0 auto;
+
+    @media all and (max-width: ${(props) => props.theme.desktop}) {
+        padding: 5px;
+    }
 `;
 
 const StackDetail = styled.div`

@@ -6,6 +6,7 @@ import { Skeleton } from "antd";
 import EmptyDataComponent from "../common/EmptyData";
 import { doc } from "../../@types/type";
 import { levelIconChange } from "../../lib";
+import DocsList from "../common/DocsList";
 
 const SearchContainer = styled.div`
     width: 100%;
@@ -23,21 +24,6 @@ const IsSearchTitle = styled.h3`
 
 const SearchList = styled.div`
     padding: 8px 8px 8px 0;
-`;
-
-const SearchContent = styled.div`
-    a {
-        color: ${(props) => props.theme.link};
-        font-weight: 600;
-        font-size: ${(props) => props.theme.ls};
-    }
-    p {
-        margin: 8px 0;
-    }
-
-    span {
-        font-weight: 600;
-    }
 `;
 
 type Props = {
@@ -60,20 +46,7 @@ const SearchForm = ({ searchText, loading, data }: Props) => {
                             </IsSearchTitle>
                             <SearchList>
                                 {data?.map((doc) => (
-                                    <SearchContent>
-                                        <Link href={`/docs/${doc._id}`}>
-                                            <a>{doc.title}</a>
-                                        </Link>
-                                        <div>
-                                            <p>{doc.description}</p>
-                                            <span>
-                                                {levelIconChange(
-                                                    doc.creator.level
-                                                )}{" "}
-                                                {doc.creator.userId}
-                                            </span>
-                                        </div>
-                                    </SearchContent>
+                                    <DocsList doc={doc}></DocsList>
                                 ))}
                             </SearchList>
                         </>
