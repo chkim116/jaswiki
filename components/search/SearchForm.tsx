@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Title } from "../../styles/commonStyles";
-import Link from "next/link";
 import { Skeleton } from "antd";
 import EmptyDataComponent from "../common/EmptyData";
 import { doc } from "../../@types/type";
-import { levelIconChange } from "../../lib";
 import DocsList from "../common/DocsList";
 
 const SearchContainer = styled.div`

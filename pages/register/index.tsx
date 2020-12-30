@@ -1,11 +1,14 @@
 import { useFormInput } from "@cooksmelon/event";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import RegisterForm from "../../components/register/RegisterForm";
 import { usePush } from "../../hook";
 import { RootState } from "../../redux";
 import { registerRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/commonLoading";
+import dynamic from "next/dynamic";
+const RegisterForm = dynamic(
+    () => import("../../components/register/RegisterForm")
+);
 
 const register = () => {
     const [form, onFormChange] = useFormInput();

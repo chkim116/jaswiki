@@ -1,5 +1,8 @@
 import React from "react";
-import TutorialForm from "../../components/tutorial/TutorialForm";
+import dynamic from "next/dynamic";
+const TutorialForm = dynamic(
+    () => import("../../components/tutorial/TutorialForm")
+);
 
 const tutorial = () => {
     return <TutorialForm></TutorialForm>;

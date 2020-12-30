@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import HomeForm from "../components/Home/HomeForm";
 import { RootState } from "../redux";
 import { getDocsRequest } from "../redux/docs";
+import dynamic from "next/dynamic";
+const HomeForm = dynamic(() => import("../components/Home/HomeForm"));
 
 const index = () => {
     const dispatch = useDispatch();

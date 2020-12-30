@@ -1,8 +1,9 @@
 import { useRouter } from "next/dist/client/router";
 import React from "react";
 import { useSelector } from "react-redux";
-import WriteForm from "../../components/write/WriteForm";
 import { RootState } from "../../redux";
+import dynamic from "next/dynamic";
+const WriteForm = dynamic(() => import("../../components/write/WriteForm"));
 
 const index = () => {
     const router = useRouter();

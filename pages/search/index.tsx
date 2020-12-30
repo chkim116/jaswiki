@@ -2,7 +2,8 @@ import Axios from "axios";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import SearchForm from "../../components/search/SearchForm";
+import dynamic from "next/dynamic";
+const SearchForm = dynamic(() => import("../../components/search/SearchForm"));
 
 const fetcher = (url: string) => {
     return Axios.post(url).then((res) => res.data);

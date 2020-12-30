@@ -1,9 +1,12 @@
 import { useRouter } from "next/dist/client/router";
 import React from "react";
 import useSWR from "swr";
-import ContributeForm from "../../components/contribute/ContributeForm";
 import Axios from "axios";
 import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
+import dynamic from "next/dynamic";
+const ContributeForm = dynamic(
+    () => import("../../components/contribute/ContributeForm")
+);
 
 const fetcher = (url: string) => {
     return Axios.get(url).then((res) => res.data);

@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 import wrapper from "../store/configureStore";
-import withReduxSaga from "next-redux-saga";
 import "../styles/global.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "../styles/theme";
 import { Wrapper } from "../styles/commonStyles";
-import Nav from "../components/layouts/Nav";
-import Footer from "../components/layouts/Footer";
 import { useRouter } from "next/dist/client/router";
 import { AppProps } from "next/dist/next-server/lib/router/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +13,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import styled from "@emotion/styled";
 import Axios from "axios";
+import dynamic from "next/dynamic";
+const Nav = dynamic(() => import("../components/layouts/Nav"));
+const Footer = dynamic(() => import("../components/layouts/Footer"));
 
 const Loader = styled.div`
     width: 100%;
@@ -53,6 +53,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, [router]);
 
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
@@ -75,4 +76,4 @@ const App = ({ Component, pageProps }: AppProps) => {
     );
 };
 
-export default wrapper.withRedux(withReduxSaga(App));
+export default wrapper.withRedux(App);

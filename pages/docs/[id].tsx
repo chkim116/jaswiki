@@ -1,7 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DocsForm from "../../components/docs/DocsForm";
 import { RootState } from "../../redux";
 import { loadRequest } from "../../redux/commonLoading";
 import { delDocsRequest, getDocById } from "../../redux/docs";
@@ -9,6 +8,8 @@ import useSwr from "swr";
 import Axios from "axios";
 import marked from "marked";
 import { highlights } from "../../lib/highlight";
+import dynamic from "next/dynamic";
+const DocsForm = dynamic(() => import("../../components/docs/DocsForm"));
 
 const fetcher = (url: string) => {
     return Axios.get(url).then((res) => res.data);

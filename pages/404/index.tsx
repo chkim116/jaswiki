@@ -1,5 +1,8 @@
 import React from "react";
-import EmptyDataComponent from "../../components/common/EmptyData";
+import dynamic from "next/dynamic";
+const EmptyDataComponent = dynamic(
+    () => import("../../components/common/EmptyData")
+);
 
 const index = () => {
     return (

@@ -1,8 +1,9 @@
 import React from "react";
-import WriteForm from "../../components/write/WriteForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import EmptyDataComponent from "../../components/common/EmptyData";
+import dynamic from "next/dynamic";
+const WriteForm = dynamic(() => import("../../components/write/WriteForm"));
 
 const index = () => {
     const { isLogin } = useSelector((state: RootState) => state.auth);
