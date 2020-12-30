@@ -15,6 +15,7 @@ export type doc = {
     createDate: string;
     recentUpdate: string;
     stack: number[];
+    secret?: boolean;
     creator: { userId: string; level: number; _id: string };
     recentCreator: { userId: string; level: number; _id: string };
     contributer: [{ userId: string; level: number; _id: string }];

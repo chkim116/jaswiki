@@ -28,7 +28,7 @@ const Loader = styled.div`
 `;
 
 // 페이지의 공통
-Axios.defaults.baseURL = "http://localhost:4000";
+Axios.defaults.baseURL = "http://localhost:4000/";
 Axios.defaults.withCredentials = true;
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -50,7 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
     useEffect(() => {
         dispatch(getAuthRequest());
-    }, [router.query]);
+    }, [router]);
 
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
     return (

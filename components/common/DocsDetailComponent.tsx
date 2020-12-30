@@ -5,25 +5,25 @@ import { useReplace } from "@cooksmelon/utils";
 
 const Content = styled.div``;
 
-const ContentDesc = styled.div`
+export const ContentDesc = styled.div`
     display: flex;
     justify-content: space-between;
     min-height: 250px;
+    font-size: 16px;
     @media all and (max-width: ${(props) => props.theme.desktop}) {
         flex-direction: column;
     }
 `;
 
-const BookAnchor = styled(Anchor)`
+export const BookAnchor = styled(Anchor)`
     min-width: 300px;
     max-width: 300px;
     padding: 0;
-    border-bottom: 1px solid ${(props) => props.theme.darkWhite};
     margin-bottom: 36px;
     @media all and (max-width: ${(props) => props.theme.desktop}) {
-        margin: 0 auto;
+        margin: 36px auto;
         width: 100%;
-        max-width: 96%;
+        max-width: 100%;
         min-height: 150px;
     }
 `;
@@ -39,6 +39,11 @@ export const LinkTitle = styled.div`
 export const ContentDetail = styled.div`
     width: 100%;
     min-height: 300px;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    letter-spacing: -0.004em;
+    word-break: keep-all;
+    overflow-wrap: break-word;
     h1 {
         position: relative;
         margin-top: 40px;
@@ -68,13 +73,18 @@ export const ContentDetail = styled.div`
         padding: 8px;
         margin: 5px 0;
     }
+
+    img {
+        display: block;
+        margin: 3px auto;
+    }
 `;
 
 type Props = {
     content: string;
     description: string;
-    anchor: string[];
-    node: any;
+    anchor?: string[];
+    node?: any;
 };
 
 const DocsDetailComponent = ({ content, description, anchor, node }: Props) => {

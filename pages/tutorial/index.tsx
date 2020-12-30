@@ -1,7 +1,8 @@
 import React from "react";
+import TutorialForm from "../../components/tutorial/TutorialForm";
 
 const tutorial = () => {
-    return <div>자스위키 튜토리얼</div>;
+    return <TutorialForm></TutorialForm>;
 };
 
 export default tutorial;

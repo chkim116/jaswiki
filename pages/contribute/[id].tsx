@@ -11,7 +11,6 @@ const fetcher = (url: string) => {
 
 const index = () => {
     const router = useRouter();
-
     const { data, error } = useSWR(`/docs/user/${router.query.id}`, fetcher);
 
     return (

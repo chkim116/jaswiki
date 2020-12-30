@@ -5,15 +5,17 @@ import styled from "@emotion/styled";
 import { levelIconChange } from "../../lib/levelChange";
 import { Title } from "../../styles/commonStyles";
 import { Button } from "antd";
+import Link from "next/link";
 
 const Container = styled.div`
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
+    padding: 0 5px;
 `;
 
 const UserInfo = styled.div`
-    min-height: 400px;
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,6 +42,12 @@ const UserInfo = styled.div`
     }
 `;
 
+const ToLevelUp = styled.div`
+    margin-bottom: 48px;
+    width: 100%;
+    text-align: center;
+`;
+
 const WriteContainer = styled.div`
     padding-bottom: 80px;
 `;
@@ -51,6 +59,7 @@ type Props = {
 const ContributeForm = ({ data }: Props) => {
     return (
         <Container>
+            <Title>MyInfo</Title>
             <UserInfo>
                 <ul>
                     <li>
@@ -73,7 +82,12 @@ const ContributeForm = ({ data }: Props) => {
                     </li>
                 </ul>
             </UserInfo>
-            <Title>내가 쓴 글</Title>
+            <ToLevelUp>
+                <Link href="/tutorial">
+                    <Button type="primary">레벨업이 궁금하세요?</Button>
+                </Link>
+            </ToLevelUp>
+            <Title>MyDocs</Title>
             <WriteContainer>
                 {data.docs?.map((doc: doc) => (
                     <Fragment key={doc._id}>

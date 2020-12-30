@@ -13,6 +13,8 @@ const Toolbar = styled.div`
     padding: 7px 0;
     position: sticky;
     top: 0;
+    z-index: 55;
+    background-color: ${(props) => props.theme.white};
     button {
         &:nth-of-type(odd) {
             border-right: 1px solid ${(props) => props.theme.darkWhite};

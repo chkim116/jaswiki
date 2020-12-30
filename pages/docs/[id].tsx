@@ -15,7 +15,7 @@ const fetcher = (url: string) => {
 };
 
 const index = () => {
-    const { _id } = useSelector((state: RootState) => state.auth.user);
+    const id = useSelector((state: RootState) => state.auth.user);
     const [anchor, setAnchor] = useState<string[]>([]);
     const router = useRouter();
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const index = () => {
     }, [data, error]);
 
     const onDelete = useCallback(() => {
-        dispatch(delDocsRequest({ router: router.query.id, _id: _id }));
+        dispatch(delDocsRequest({ router: router.query.id, _id: id._id }));
         dispatch(loadRequest());
         window.location.href = "/";
     }, [dispatch, router]);
@@ -52,7 +52,7 @@ const index = () => {
         <DocsForm
             doc={data}
             onDelete={onDelete}
-            _id={_id}
+            _id={id._id}
             node={node}
             anchor={anchor}></DocsForm>
     );

@@ -9,6 +9,10 @@ const index = () => {
     const { id } = router.query;
     const { doc } = useSelector((state: RootState) => state.docs);
 
+    if (doc.secret) {
+        router.back();
+    }
+
     return <WriteForm isEdit={true} route={id as string} doc={doc}></WriteForm>;
 };
 

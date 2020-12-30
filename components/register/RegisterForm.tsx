@@ -56,7 +56,7 @@ const RegisterForm = ({ onFormChange, onSubmit }: SignProps) => {
                 <h1>
                     회원가입을 하면🤝 <br />
                     기여도도 측정하고🎤 <br />
-                    IP를 숨기는 등 다양한 혜택을 누릴 수 있습니다😄
+                    문서를 작성하는 등 다양한 혜택을 누릴 수 있습니다😄
                 </h1>
             </div>
             <Form onChange={onFormChange} onSubmit={onSubmit}>

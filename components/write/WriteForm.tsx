@@ -12,9 +12,10 @@ import { updateRequest, WriteRequest } from "../../redux/write";
 import { usePush } from "../../hook";
 import { RootState } from "../../redux";
 import { doc } from "../../@types/type";
-import { addMark, stackList } from "../../lib";
+import { stackList } from "../../lib/stackList";
 import marked from "marked";
 import Axios from "axios";
+import { addMark } from "../../lib/toolbar";
 
 const WriteContainer = styled.div`
     width: 100%;
@@ -30,7 +31,7 @@ const EditorContainer = styled.div`
     width: 50%;
     input {
         all: unset;
-        font-size: ${(props) => props.theme.xls};
+        font-size: 38px;
         font-weight: 600;
         width: 100%;
         padding: 8px 3px;
@@ -76,12 +77,18 @@ const Preview = styled.div`
         padding-bottom: 6px;
         margin-bottom: 6px;
         border-bottom: 1px solid ${(props) => props.theme.darkWhite};
+        font-size: 38px;
     }
     width: 50%;
     max-height: 990px;
     min-height: 600px;
     border: 1px solid #dbdbdb;
     padding: 10px;
+
+    img {
+        display: block;
+        margin: 3px auto;
+    }
     @media all and (max-width: ${(props) => props.theme.desktop}) {
         display: none;
     }
@@ -238,7 +245,7 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
             title,
             description: desc,
             content: text,
-            creator: user._id,
+            creator: user._id ? user._id : "",
             stack,
         };
         setIsSubmit(() => true);
@@ -282,9 +289,7 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
                         onSelect={onSelect}
                         ref={editor}
                         value={text}
-                        onChange={onChange}
-                        suppressContentEditableWarning={true}
-                        contentEditable="true"></Editor>
+                        onChange={onChange}></Editor>
                     <SelectStack
                         mode="multiple"
                         placeholder="Stack"

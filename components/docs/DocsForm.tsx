@@ -102,9 +102,13 @@ const DocsForm = ({ doc, _id, onDelete, anchor, node }: Props) => {
                         </div>
                         <DocsDesc>
                             <div>
-                                <Link href={`/edit/${doc._id}`}>
-                                    <a>편집</a>
-                                </Link>
+                                {doc.secret ? (
+                                    "🔐"
+                                ) : (
+                                    <Link href={`/edit/${doc._id}`}>
+                                        <a>편집</a>
+                                    </Link>
+                                )}
 
                                 {_id === doc.creator._id && (
                                     <Popconfirm
@@ -148,14 +152,19 @@ const DocsForm = ({ doc, _id, onDelete, anchor, node }: Props) => {
                                 {doc.creator.userId}
                             </span>
                         </div>
-                        {doc.recentCreator.userId && (
+                        {doc.recentCreator !== null ? (
                             <div>
                                 <div>최근수정자</div>
                                 <span>
                                     {levelIconChange(doc.recentCreator.level)}{" "}
-                                    {doc.recentCreator.userId} /
+                                    {doc.recentCreator.userId} /{" "}
                                     {doc.recentUpdate}
                                 </span>
+                            </div>
+                        ) : (
+                            <div>
+                                <div>최근수정자</div>
+                                <span>익명 / {doc.recentUpdate}</span>
                             </div>
                         )}
                         <div>

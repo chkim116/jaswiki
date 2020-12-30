@@ -12,11 +12,10 @@ import {
     SiTypescript,
 } from "react-icons/si";
 import styled from "@emotion/styled";
-import { DetailTitle, Title } from "../../styles/commonStyles";
+import { Title } from "../../styles/commonStyles";
 import Link from "next/link";
 import { doc } from "../../@types/type";
 import StackComponent from "../common/StackComponent";
-import DocsDetailComponent from "../common/DocsDetailComponent";
 import DocsSkeleton from "../common/skeleton/DocsSkeleton";
 
 const HomeContainer = styled.div`
@@ -50,27 +49,6 @@ const NewFeed = styled.ul`
         &:hover {
             text-decoration: underline;
         }
-    }
-`;
-
-const Community = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background: #fafbfc;
-    padding: 8px 10px;
-    div:nth-of-type(1) {
-        width: 120px;
-    }
-    div:nth-of-type(2) {
-        margin: 0 9px;
-        cursor: pointer;
-        flex: 2;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-    div:nth-of-type(3) {
     }
 `;
 
@@ -124,14 +102,6 @@ const HomeForm = ({ docs, isDone }: Props) => {
                     <DocsSkeleton />
                 )}
             </NewFeed>
-            <DetailTitle>한줄잡담</DetailTitle>
-            <Community>
-                <div>이름</div>
-                <Link href="">
-                    <div>잡담내용</div>
-                </Link>
-                <div>날짜</div>
-            </Community>
         </HomeContainer>
     );
 };

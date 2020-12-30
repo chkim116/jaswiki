@@ -7,8 +7,10 @@ export const Wrapper = styled.main`
 export const Title = styled.h1`
     margin: 20px 0;
     padding-bottom: 12px;
+
     border-bottom: 2px solid ${(props) => props.theme.darkWhite};
     position: relative;
+    font-size: 38px;
     span {
         font-size: ${(props) => props.theme.ms};
         position: absolute;
