@@ -12,7 +12,7 @@ import {
 
 const icon = (size: number) => [
     {
-        component: <SiJquery size={size} data-type="0" fill="#F7DF1E" />,
+        component: <SiJquery size={size} data-type="0" fill="#f1d900" />,
         type: 0,
     },
     {

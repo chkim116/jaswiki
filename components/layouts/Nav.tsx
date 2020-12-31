@@ -93,7 +93,7 @@ const Nav = ({ onSearch, isLogin, onLogOut, id }: Props) => {
                             <SiJavascript
                                 size={54}
                                 style={{ cursor: "pointer" }}
-                                fill="#FBE574"
+                                fill="#f1d900"
                             />
                         </div>
                     </Link>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { SignProps } from "../login/LoginForm";
+import { Btn, SignProps } from "../login/LoginForm";
 
 export const SignContainer = styled.div`
     display: flex;
@@ -49,7 +49,15 @@ export const Form = styled.form`
     }
 `;
 
-const RegisterForm = ({ onFormChange, onSubmit }: SignProps) => {
+export const KakaoBtn = styled.button`
+    width: 150px;
+    border: 1px solid ${(props) => props.theme.darkWhite};
+    background-color: #f1d900;
+    padding: 8px;
+    color: #391b1b;
+`;
+
+const RegisterForm = ({ onFormChange, onSubmit, onKaKaoLogin }: SignProps) => {
     return (
         <SignContainer>
             <div>
@@ -73,11 +81,16 @@ const RegisterForm = ({ onFormChange, onSubmit }: SignProps) => {
                     required
                 />
                 <input type="email" name="email" placeholder="이메일" />
-                <button type="submit">가입완료</button>
+                <button type="submit">Done!</button>
             </Form>
-            <Link href="/login">
-                <a>로그인하기</a>
-            </Link>
+            <KakaoBtn type="button" onClick={onKaKaoLogin}>
+                KaKaoLogin
+            </KakaoBtn>
+            <Btn>
+                <Link href="/login">
+                    <a>Login-{">"}</a>
+                </Link>
+            </Btn>
         </SignContainer>
     );
 };

@@ -28,7 +28,10 @@ const Loader = styled.div`
 `;
 
 // 페이지의 공통
-Axios.defaults.baseURL = "http://localhost:4000/";
+Axios.defaults.baseURL =
+    process.env.NODE_ENV === "production"
+        ? "https://local/"
+        : "http://localhost:4000/";
 Axios.defaults.withCredentials = true;
 
 const App = ({ Component, pageProps }: AppProps) => {
