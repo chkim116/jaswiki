@@ -8,7 +8,6 @@ import StackComponent from "../common/StackComponent";
 import { levelIconChange } from "../../lib/levelChange";
 import { Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import DocsSkeleton from "../common/skeleton/DocsSkeleton";
 import marked from "marked";
 
 const DocsContainer = styled.div`
@@ -88,101 +87,95 @@ type Props = {
 const DocsForm = ({ doc, _id, onDelete, anchor, node }: Props) => {
     return (
         <>
-            {doc ? (
-                <DocsContainer>
-                    <Title>
-                        {doc.title}
-                        <StackComponent stack={doc.stack} />
-                    </Title>
-                    <StackDetail>
+            <DocsContainer>
+                <Title>
+                    {doc.title}
+                    <StackComponent stack={doc.stack} />
+                </Title>
+                <StackDetail>
+                    <div>
+                        <span>이 문서는</span>
+                        <StackComponent stack={doc.stack} size={30} />
+                        <span>에서 응용이 가능합니다.</span>
+                    </div>
+                    <DocsDesc>
                         <div>
-                            <span>이 문서는</span>
-                            <StackComponent stack={doc.stack} size={30} />
-                            <span>에서 응용이 가능합니다.</span>
-                        </div>
-                        <DocsDesc>
-                            <div>
-                                {doc.secret ? (
-                                    "🔐"
-                                ) : (
-                                    <Link href={`/edit/${doc._id}`}>
-                                        <a>편집</a>
-                                    </Link>
-                                )}
+                            {doc.secret ? (
+                                "🔐"
+                            ) : (
+                                <Link href={`/edit/${doc._id}`}>
+                                    <a>편집</a>
+                                </Link>
+                            )}
 
-                                {_id === doc.creator._id && (
-                                    <Popconfirm
-                                        title="정말 삭제인가요? 다시 복구 하지 못합니다!"
-                                        icon={
-                                            <QuestionCircleOutlined
-                                                style={{ color: "red" }}
-                                            />
-                                        }
-                                        onConfirm={onDelete}>
-                                        <Del href="#">삭제</Del>
-                                    </Popconfirm>
-                                )}
-                            </div>
-                            <div>
-                                <div>🕑 {doc.createDate} </div>
-                                <div>
-                                    {levelIconChange(doc.creator.level)}
-                                    {doc.creator.userId}
-                                </div>
-                            </div>
-                        </DocsDesc>
-                    </StackDetail>
-
-                    <DocsDetailComponent
-                        node={node}
-                        anchor={anchor}
-                        content={marked(doc.content)}
-                        description={doc.description}
-                    />
-
-                    <DocsFooter>
-                        <div>
-                            <div>최초 생성일</div>
-                            <span>{doc.createDate}</span>
+                            {_id === doc.creator._id && (
+                                <Popconfirm
+                                    title="정말 삭제인가요? 다시 복구 하지 못합니다!"
+                                    icon={
+                                        <QuestionCircleOutlined
+                                            style={{ color: "red" }}
+                                        />
+                                    }
+                                    onConfirm={onDelete}>
+                                    <Del href="#">삭제</Del>
+                                </Popconfirm>
+                            )}
                         </div>
                         <div>
-                            <div>생성자</div>
-                            <span>
-                                {levelIconChange(doc.creator.level)}{" "}
+                            <div>🕑 {doc.createDate} </div>
+                            <div>
+                                {levelIconChange(doc.creator.level)}
                                 {doc.creator.userId}
-                            </span>
+                            </div>
                         </div>
-                        {doc.recentCreator !== null ? (
-                            <div>
-                                <div>최근수정자</div>
-                                <span>
-                                    {levelIconChange(doc.recentCreator.level)}{" "}
-                                    {doc.recentCreator.userId} /{" "}
-                                    {doc.recentUpdate}
-                                </span>
-                            </div>
-                        ) : (
-                            <div>
-                                <div>최근수정자</div>
-                                <span>익명 / {doc.recentUpdate}</span>
-                            </div>
-                        )}
+                    </DocsDesc>
+                </StackDetail>
+
+                <DocsDetailComponent
+                    node={node}
+                    anchor={anchor}
+                    content={marked(doc.content)}
+                    description={doc.description}
+                />
+
+                <DocsFooter>
+                    <div>
+                        <div>최초 생성일</div>
+                        <span>{doc.createDate}</span>
+                    </div>
+                    <div>
+                        <div>생성자</div>
+                        <span>
+                            {levelIconChange(doc.creator.level)}{" "}
+                            {doc.creator.userId}
+                        </span>
+                    </div>
+                    {doc.recentCreator !== null ? (
                         <div>
-                            <div>기여자</div>
+                            <div>최근수정자</div>
                             <span>
-                                {doc.contributer.map((con) => (
-                                    <div key={con.userId}>
-                                        {levelIconChange(con.level)}{" "}
-                                        {con.userId}
-                                    </div>
-                                ))}
+                                {levelIconChange(doc.recentCreator.level)}{" "}
+                                {doc.recentCreator.userId} / {doc.recentUpdate}
                             </span>
                         </div>
-                    </DocsFooter>
-                </DocsContainer>
-            ) : (
-                <DocsSkeleton />
-            )}
+                    ) : (
+                        <div>
+                            <div>최근수정자</div>
+                            <span>익명 / {doc.recentUpdate}</span>
+                        </div>
+                    )}
+                    <div>
+                        <div>기여자</div>
+                        <span>
+                            {doc.contributer.map((con) => (
+                                <div key={con.userId}>
+                                    {levelIconChange(con.level)} {con.userId}
+                                </div>
+                            ))}
+                        </span>
+                    </div>
+                </DocsFooter>
+            </DocsContainer>
         </>
     );
 };

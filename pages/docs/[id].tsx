@@ -4,30 +4,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { loadRequest } from "../../redux/commonLoading";
 import { delDocsRequest, getDocById } from "../../redux/docs";
-import useSwr from "swr";
 import Axios from "axios";
 import marked from "marked";
 import { highlights } from "../../lib/highlight";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
-import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
-const DocsForm = dynamic(() => import("../../components/docs/DocsForm"), {
-    loading: () => <DocsSkeleton />,
-});
+import { GetServerSideProps } from "next";
+const DocsForm = dynamic(() => import("../../components/docs/DocsForm"));
 
 const fetcher = (url: string) => {
     return Axios.get(url).then((res) => res.data);
 };
 
-const index = () => {
+type Props = {
+    data: any;
+};
+
+const index = ({ data }: Props) => {
     const id = useSelector((state: RootState) => state.auth.user);
     const [anchor, setAnchor] = useState<string[]>([]);
     const router = useRouter();
     const dispatch = useDispatch();
-    const { data, error } = useSwr(`/docs/${router.query.id}`, fetcher);
     const node = useRef<any>(null);
     const nodes = node.current?.querySelectorAll("pre");
-
     // 수정 시를 위해 리덕스에 저장
     useEffect(() => {
         if (data) {
@@ -39,7 +38,7 @@ const index = () => {
             setAnchor(head);
             dispatch(getDocById(data));
         }
-    }, [data, error]);
+    }, []);
 
     const onDelete = useCallback(() => {
         dispatch(delDocsRequest({ router: router.query.id, _id: id._id }));
@@ -71,6 +70,11 @@ const index = () => {
                 anchor={anchor}></DocsForm>
         </>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const data = await fetcher(`/docs/${ctx.query.id}`);
+    return { props: { data } };
 };
 
 export default index;
