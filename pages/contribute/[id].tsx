@@ -6,7 +6,10 @@ import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
 const ContributeForm = dynamic(
-    () => import("../../components/contribute/ContributeForm")
+    () => import("../../components/contribute/ContributeForm"),
+    {
+        loading: () => <DocsSkeleton />,
+    }
 );
 
 const fetcher = (url: string) => {

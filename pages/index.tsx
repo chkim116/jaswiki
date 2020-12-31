@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux";
 import { getDocsRequest } from "../redux/docs";
 import dynamic from "next/dynamic";
 import Seo from "../components/common/Seo";
-const HomeForm = dynamic(() => import("../components/Home/HomeForm"));
+import DocsSkeleton from "../components/common/skeleton/DocsSkeleton";
+const HomeForm = dynamic(() => import("../components/Home/HomeForm"), {
+    loading: () => <DocsSkeleton />,
+});
 
 const index = () => {
     const dispatch = useDispatch();

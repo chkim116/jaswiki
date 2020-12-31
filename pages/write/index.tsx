@@ -4,7 +4,10 @@ import { RootState } from "../../redux";
 import EmptyDataComponent from "../../components/common/EmptyData";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
-const WriteForm = dynamic(() => import("../../components/write/WriteForm"));
+import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
+const WriteForm = dynamic(() => import("../../components/write/WriteForm"), {
+    loading: () => <DocsSkeleton />,
+});
 
 const index = () => {
     const { isLogin } = useSelector((state: RootState) => state.auth);

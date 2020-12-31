@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
-const SearchForm = dynamic(() => import("../../components/search/SearchForm"));
+import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
+const SearchForm = dynamic(() => import("../../components/search/SearchForm"), {
+    loading: () => <DocsSkeleton />,
+});
 
 const fetcher = (url: string) => {
     return Axios.post(url).then((res) => res.data);

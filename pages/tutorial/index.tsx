@@ -1,8 +1,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
+import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
 const TutorialForm = dynamic(
-    () => import("../../components/tutorial/TutorialForm")
+    () => import("../../components/tutorial/TutorialForm"),
+    { loading: () => <DocsSkeleton /> }
 );
 
 const data = {

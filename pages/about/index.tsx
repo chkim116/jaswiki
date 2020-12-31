@@ -1,7 +1,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
-const AboutForm = dynamic(() => import("../../components/About/AboutForm"));
+import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
+const AboutForm = dynamic(() => import("../../components/About/AboutForm"), {
+    loading: () => <DocsSkeleton />,
+});
 
 const about = () => {
     const data = {

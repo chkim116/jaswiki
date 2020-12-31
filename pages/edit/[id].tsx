@@ -4,7 +4,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
-const WriteForm = dynamic(() => import("../../components/write/WriteForm"));
+import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
+const WriteForm = dynamic(() => import("../../components/write/WriteForm"), {
+    loading: () => <DocsSkeleton />,
+});
 
 const index = () => {
     const router = useRouter();
