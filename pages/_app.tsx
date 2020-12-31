@@ -30,7 +30,7 @@ const Loader = styled.div`
 // 페이지의 공통
 Axios.defaults.baseURL =
     process.env.NODE_ENV === "production"
-        ? "https://local/"
+        ? "https://jaswikib.ml/"
         : "http://localhost:4000/";
 Axios.defaults.withCredentials = true;
 

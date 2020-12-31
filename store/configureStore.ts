@@ -21,6 +21,6 @@ const configureStore = () => {
 };
 
 //next redux wrapper => 넥스트에서 리덕스를 쓰겠다는 내용
-const wrapper = createWrapper(configureStore, { debug: true });
+const wrapper = createWrapper(configureStore, { debug: false });
 
 export default wrapper;
