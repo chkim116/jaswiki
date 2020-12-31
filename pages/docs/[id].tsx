@@ -9,6 +9,7 @@ import Axios from "axios";
 import marked from "marked";
 import { highlights } from "../../lib/highlight";
 import dynamic from "next/dynamic";
+import Seo from "../../components/common/Seo";
 const DocsForm = dynamic(() => import("../../components/docs/DocsForm"));
 
 const fetcher = (url: string) => {
@@ -49,13 +50,23 @@ const index = () => {
         }
     }, [nodes]);
 
+    const dataSeo = {
+        title: `${data?.title}`,
+        url: `docs/${router.query.id}`,
+        desc: `${data?.description}`,
+        images: `${data?.content?.split('="')[1]?.split('">')[0]}`,
+    };
+
     return (
-        <DocsForm
-            doc={data}
-            onDelete={onDelete}
-            _id={id._id}
-            node={node}
-            anchor={anchor}></DocsForm>
+        <>
+            {data && <Seo data={dataSeo} />}
+            <DocsForm
+                doc={data}
+                onDelete={onDelete}
+                _id={id._id}
+                node={node}
+                anchor={anchor}></DocsForm>
+        </>
     );
 };
 

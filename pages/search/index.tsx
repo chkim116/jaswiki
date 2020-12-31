@@ -3,6 +3,7 @@ import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
+import Seo from "../../components/common/Seo";
 const SearchForm = dynamic(() => import("../../components/search/SearchForm"));
 
 const fetcher = (url: string) => {
@@ -22,8 +23,20 @@ const search = () => {
         }
     }, [data]);
 
+    const dataSeo = {
+        title: `${q} 검색결과`,
+        url: `search?q=${q}`,
+        desc: `${q}를 검색한 결과는 다음과 같습니다.`,
+    };
+
     return (
-        <SearchForm loading={loading} searchText={q} data={data}></SearchForm>
+        <>
+            <Seo data={dataSeo} />
+            <SearchForm
+                loading={loading}
+                searchText={q}
+                data={data}></SearchForm>
+        </>
     );
 };
 

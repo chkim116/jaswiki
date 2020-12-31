@@ -6,6 +6,8 @@ import { RootState } from "../../redux";
 import { loginRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/commonLoading";
 import dynamic from "next/dynamic";
+import axios from "axios";
+import Seo from "../../components/common/Seo";
 const LoginForm = dynamic(() => import("../../components/login/LoginForm"));
 
 const login = () => {
@@ -21,10 +23,27 @@ const login = () => {
         [form, dispatch]
     );
 
+    const onKaKaoLogin = useCallback(() => {
+        const kakako = async () => await axios.get("/user/kakao");
+        kakako();
+    }, []);
+
     usePush(isLogin, "/");
 
+    const data = {
+        title: "로그인",
+        url: "login",
+        desc: "자스위키 로그인하기",
+    };
+
     return (
-        <LoginForm onFormChange={onFormChange} onSubmit={onSubmit}></LoginForm>
+        <>
+            <Seo data={data} />
+            <LoginForm
+                onFormChange={onFormChange}
+                onKaKaoLogin={onKaKaoLogin}
+                onSubmit={onSubmit}></LoginForm>
+        </>
     );
 };
 

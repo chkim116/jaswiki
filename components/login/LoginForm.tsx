@@ -2,15 +2,20 @@ import React from "react";
 import { SignContainer } from "../register/RegisterForm";
 import Link from "next/link";
 import { Form } from "../register/RegisterForm";
+import { Button } from "antd";
 
 export type SignProps = {
     onFormChange: (e: React.FormEvent<HTMLFormElement>) => void;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    onKaKaoLogin: () => void;
 };
 
-const LoginForm = ({ onFormChange, onSubmit }: SignProps) => {
+const LoginForm = ({ onFormChange, onSubmit, onKaKaoLogin }: SignProps) => {
     return (
         <SignContainer>
+            <Button type="primary" onClick={onKaKaoLogin}>
+                카카오
+            </Button>
             <h1>로그인</h1>
             <Form onChange={onFormChange} onSubmit={onSubmit}>
                 <input type="text" name="userId" placeholder="아이디 입력" />

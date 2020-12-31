@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import dynamic from "next/dynamic";
+import Seo from "../../components/common/Seo";
 const WriteForm = dynamic(() => import("../../components/write/WriteForm"));
 
 const index = () => {
@@ -14,7 +15,18 @@ const index = () => {
         router.back();
     }
 
-    return <WriteForm isEdit={true} route={id as string} doc={doc}></WriteForm>;
+    const data = {
+        title: "게시글 수정",
+        url: `edit/${id}`,
+        desc: "게시글 수정",
+    };
+
+    return (
+        <>
+            <Seo data={data} />
+            <WriteForm isEdit={true} route={id as string} doc={doc}></WriteForm>
+        </>
+    );
 };
 
 export default index;

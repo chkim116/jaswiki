@@ -6,6 +6,7 @@ import { RootState } from "../../redux";
 import { registerRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/commonLoading";
 import dynamic from "next/dynamic";
+import Seo from "../../components/common/Seo";
 const RegisterForm = dynamic(
     () => import("../../components/register/RegisterForm")
 );
@@ -29,10 +30,19 @@ const register = () => {
 
     usePush(isLogin, "/");
 
+    const data = {
+        title: "회원가입",
+        url: "register",
+        desc: "자스위키 회원가입",
+    };
+
     return (
-        <RegisterForm
-            onFormChange={onFormChange}
-            onSubmit={onSubmit}></RegisterForm>
+        <>
+            <Seo data={data} />
+            <RegisterForm
+                onFormChange={onFormChange}
+                onSubmit={onSubmit}></RegisterForm>
+        </>
     );
 };
 
