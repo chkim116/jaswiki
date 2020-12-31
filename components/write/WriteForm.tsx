@@ -87,7 +87,8 @@ const Preview = styled.div`
 
     img {
         display: block;
-        margin: 3px auto;
+        width: 100%;
+        margin: 8px auto;
     }
     @media all and (max-width: ${(props) => props.theme.desktop}) {
         display: none;

@@ -75,8 +75,9 @@ export const ContentDetail = styled.div`
     }
 
     img {
+        max-width: 100%;
         display: block;
-        margin: 3px auto;
+        margin: 8px auto;
     }
 `;
 
