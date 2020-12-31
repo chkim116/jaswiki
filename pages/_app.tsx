@@ -31,7 +31,7 @@ const Loader = styled.div`
 Axios.defaults.baseURL =
     process.env.NODE_ENV === "production"
         ? "https://jaswikib.ml/"
-        : "http://localhost:4000/";
+        : "http://localhost:4040/";
 Axios.defaults.withCredentials = true;
 
 const App = ({ Component, pageProps }: AppProps) => {

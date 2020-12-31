@@ -10,7 +10,10 @@ import { highlights } from "../../lib/highlight";
 import dynamic from "next/dynamic";
 import Seo from "../../components/common/Seo";
 import { GetServerSideProps } from "next";
-const DocsForm = dynamic(() => import("../../components/docs/DocsForm"));
+import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
+const DocsForm = dynamic(() => import("../../components/docs/DocsForm"), {
+    loading: () => <DocsSkeleton />,
+});
 
 const fetcher = (url: string) => {
     return Axios.get(url).then((res) => res.data);
