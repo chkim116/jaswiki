@@ -7,7 +7,7 @@ import { Button } from "antd";
 export type SignProps = {
     onFormChange: (e: React.FormEvent<HTMLFormElement>) => void;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    onKaKaoLogin: () => void;
+    onKaKaoLogin?: () => void;
 };
 
 const LoginForm = ({ onFormChange, onSubmit, onKaKaoLogin }: SignProps) => {
