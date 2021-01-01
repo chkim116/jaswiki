@@ -56,7 +56,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         if (user.token !== null) {
             dispatch(getAuthRequest());
         }
-    }, [user?.token, router]);
+    }, [router]);
 
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
