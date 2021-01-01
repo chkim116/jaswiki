@@ -31,7 +31,7 @@ const Loader = styled.div`
 // 페이지의 공통
 Axios.defaults.baseURL =
     process.env.NODE_ENV === "production"
-        ? "https://jaswikib.ml/"
+        ? "https://api.jaswiki.com/"
         : "http://localhost:4040/";
 Axios.defaults.withCredentials = true;
 
@@ -48,7 +48,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, []);
 
     const onLogOut = useCallback(() => {
-        document.cookie = `x_auth=; max-age=0; path=/; domain=jaswiki.com; secure; httpOnly`;
         router.push("/");
         dispatch(logoutRequest());
     }, []);
@@ -56,12 +55,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         dispatch(getAuthRequest());
     }, [router]);
-
-    useEffect(() => {
-        if (user.token) {
-            document.cookie = `x_auth=${user.token}; max-age=604800; path=/; domain=jaswiki.com; secure; httpOnly`;
-        }
-    }, [user?.token]);
 
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 

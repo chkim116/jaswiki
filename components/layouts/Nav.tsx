@@ -112,9 +112,7 @@ const Nav = ({ onSearch, isLogin, onLogOut, id }: Props) => {
                         </Link>
                         <Badge count={0}>
                             <Avatar shape="square" icon={<UserOutlined />} />
-                            {isLogin ||
-                            (process.browser &&
-                                document?.cookie?.includes("x_auth")) ? (
+                            {isLogin ? (
                                 <ul>
                                     <Link href={`/contribute/${id}`}>
                                         <li>기여도</li>
