@@ -7,6 +7,7 @@ import Seo from "../../components/common/Seo";
 import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
 const WriteForm = dynamic(() => import("../../components/write/WriteForm"), {
     loading: () => <DocsSkeleton />,
+    ssr: false,
 });
 
 const index = () => {

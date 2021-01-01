@@ -15,7 +15,7 @@ import styled from "@emotion/styled";
 import Axios from "axios";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-const Nav = dynamic(() => import("../components/layouts/Nav"));
+const Nav = dynamic(() => import("../components/layouts/Nav"), { ssr: false });
 const Footer = dynamic(() => import("../components/layouts/Footer"));
 
 const Loader = styled.div`
