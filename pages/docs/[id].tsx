@@ -59,7 +59,7 @@ const index = ({ data }: Props) => {
         title: `${data?.title}`,
         url: `docs/${router.query.id}`,
         desc: `${data?.description}`,
-        images: `${data?.content?.split('="')[1]?.split('">')[0]}`,
+        images: "",
     };
 
     return (

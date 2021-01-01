@@ -48,7 +48,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, []);
 
     const onLogOut = useCallback(() => {
-        document.cookie = `x_auth=; max-age=0; path=/; sameSite=none; domain=jaswiki.com; secure; httpOnly`;
+        document.cookie = `x_auth=; max-age=0; path=/; domain=jaswiki.com; secure; httpOnly`;
         router.push("/");
         dispatch(logoutRequest());
     }, []);
@@ -59,7 +59,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
     useEffect(() => {
         if (user.token) {
-            document.cookie = `x_auth=${user.token}; max-age=604800; path=/; domain=jaswiki.com; sameSite=none; secure; httpOnly`;
+            document.cookie = `x_auth=${user.token}; max-age=604800; path=/; domain=jaswiki.com; secure; httpOnly`;
         }
     }, [user?.token]);
 

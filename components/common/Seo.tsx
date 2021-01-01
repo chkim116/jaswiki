@@ -1,6 +1,6 @@
 import React from "react";
 import { NextSeo } from "next-seo";
-import image from "../../assets/banner.jpg";
+import image from "../../images/banner.jpg";
 
 type Props = {
     data: {
@@ -20,9 +20,9 @@ const Seo = ({ data }: Props) => {
                     ? data.desc
                     : "자스위키는 자바스크립트 개발자들이 모여 만드는 인터넷 실전 예제 백과입니다."
             }
-            canonical={`https://www.jaswiki.ie/${data.url && data.url}`}
+            canonical={`https://www.jaswiki.com`}
             openGraph={{
-                url: `https://www.jaswiki.ie/${data.url && data.url}`,
+                url: `https://www.jaswiki.com/${data.url && data.url}`,
                 title: data.title ? data.title : "자스위키 jaswiki",
                 description: data.desc
                     ? data.desc
