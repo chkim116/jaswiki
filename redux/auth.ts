@@ -23,6 +23,7 @@ const authState: AuthState = {
         contribute: 0,
         email: "",
         docs: [],
+        token: "",
     },
 };
 

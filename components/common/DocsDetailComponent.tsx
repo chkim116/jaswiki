@@ -74,10 +74,16 @@ export const ContentDetail = styled.div`
         margin: 5px 0;
     }
 
+    a {
+        color: ${(props) => props.theme.link};
+        &:hover {
+            color: #1890ff;
+        }
+    }
     img {
         max-width: 100%;
         display: block;
-        margin: 8px auto;
+        margin: 30px auto;
     }
 `;
 

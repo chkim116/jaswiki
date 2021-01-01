@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Link from "antd/lib/typography/Link";
+import Link from "next/link";
 import React from "react";
 import { doc } from "../../@types/type";
 import { levelIconChange } from "../../lib/levelChange";
@@ -13,6 +13,9 @@ const DocsListContent = styled.div`
         color: ${(props) => props.theme.link};
         font-weight: 600;
         font-size: ${(props) => props.theme.ls};
+        &:hover {
+            color: #1890ff;
+        }
     }
     p {
         margin: 8px 0;

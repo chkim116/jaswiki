@@ -5,6 +5,7 @@ export type user = {
     contribute: number;
     email: string;
     docs: string[] | doc[];
+    token?: string;
 };
 
 export type doc = {

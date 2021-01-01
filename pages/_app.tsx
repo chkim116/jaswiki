@@ -14,6 +14,7 @@ import { Spin } from "antd";
 import styled from "@emotion/styled";
 import Axios from "axios";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 const Nav = dynamic(() => import("../components/layouts/Nav"));
 const Footer = dynamic(() => import("../components/layouts/Footer"));
 
@@ -47,6 +48,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, []);
 
     const onLogOut = useCallback(() => {
+        document.cookie = `x_auth=; max-age=0; path=/; sameSite=none; secure; httpOnly`;
         router.push("/");
         dispatch(logoutRequest());
     }, []);
@@ -55,10 +57,24 @@ const App = ({ Component, pageProps }: AppProps) => {
         dispatch(getAuthRequest());
     }, [router]);
 
+    useEffect(() => {
+        if (user.token) {
+            document.cookie = `x_auth=${user.token}; max-age=604800; path=/; sameSite=none; secure; httpOnly`;
+        }
+    }, [user?.token]);
+
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
     return (
         <ThemeProvider theme={theme}>
+            <Head>
+                <link
+                    rel="icon"
+                    type="image/png"
+                    sizes="16x16"
+                    href="../_next/static/images/favicon-16x16.png"
+                />
+            </Head>
             <Wrapper>
                 {isCommonLoading && (
                     <Loader>
