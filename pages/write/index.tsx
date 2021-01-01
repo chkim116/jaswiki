@@ -11,7 +11,7 @@ const WriteForm = dynamic(() => import("../../components/write/WriteForm"), {
 
 const index = () => {
     const { isLogin } = useSelector((state: RootState) => state.auth);
-    console.log(document.cookie.includes("x_auth"));
+    const cookie = process.browser && document?.cookie?.includes("x_auth");
     const data = {
         title: "문서 작성",
         url: "write",
@@ -20,7 +20,7 @@ const index = () => {
     return (
         <>
             <Seo data={data} />
-            {process.browser && !document?.cookie?.includes("x_auth") ? (
+            {cookie ? (
                 <EmptyDataComponent
                     description="회원만 문서 작성이 가능합니다."
                     route="/login"
