@@ -20,7 +20,7 @@ const index = () => {
     return (
         <>
             <Seo data={data} />
-            {process.browser && !document.cookie.includes("x_auth") ? (
+            {process.browser && !document?.cookie?.includes("x_auth") ? (
                 <EmptyDataComponent
                     description="회원만 문서 작성이 가능합니다."
                     route="/login"
