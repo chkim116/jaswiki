@@ -48,15 +48,15 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, []);
 
     const onLogOut = useCallback(() => {
-        router.push("/");
         dispatch(logoutRequest());
+        router.push("/");
     }, []);
 
     useEffect(() => {
         if (user.token !== null) {
             dispatch(getAuthRequest());
         }
-    }, [router]);
+    }, [user?.token, router]);
 
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
