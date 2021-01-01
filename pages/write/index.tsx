@@ -22,7 +22,7 @@ const index = () => {
     return (
         <>
             <Seo data={data} />
-            {!token ? (
+            {token === null ? (
                 <EmptyDataComponent
                     description="회원만 문서 작성이 가능합니다."
                     route="/login"

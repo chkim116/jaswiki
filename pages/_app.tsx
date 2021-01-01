@@ -53,7 +53,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, []);
 
     useEffect(() => {
-        dispatch(getAuthRequest());
+        if (user.token !== null) {
+            dispatch(getAuthRequest());
+        }
     }, [router]);
 
     const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
