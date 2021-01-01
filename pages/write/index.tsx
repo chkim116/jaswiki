@@ -11,7 +11,9 @@ const WriteForm = dynamic(() => import("../../components/write/WriteForm"), {
 });
 
 const index = () => {
-    const { isLogin } = useSelector((state: RootState) => state.auth);
+    const {
+        user: { token },
+    } = useSelector((state: RootState) => state.auth);
     const data = {
         title: "문서 작성",
         url: "write",
@@ -20,7 +22,7 @@ const index = () => {
     return (
         <>
             <Seo data={data} />
-            {!isLogin ? (
+            {!token ? (
                 <EmptyDataComponent
                     description="회원만 문서 작성이 가능합니다."
                     route="/login"

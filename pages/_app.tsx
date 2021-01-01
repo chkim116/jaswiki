@@ -36,7 +36,7 @@ Axios.defaults.baseURL =
 Axios.defaults.withCredentials = true;
 
 const App = ({ Component, pageProps }: AppProps) => {
-    const { isLogin, user } = useSelector((state: RootState) => state.auth);
+    const { user } = useSelector((state: RootState) => state.auth);
     const { isCommonLoading } = useSelector(
         (state: RootState) => state.commonLoading
     );
@@ -76,9 +76,9 @@ const App = ({ Component, pageProps }: AppProps) => {
                 )}
                 <Nav
                     onLogOut={onLogOut}
-                    isLogin={isLogin}
                     onSearch={onSearch}
                     id={user?._id}
+                    token={user?.token}
                 />
                 <Component {...pageProps} />
                 {router.asPath === "/register" ||
