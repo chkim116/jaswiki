@@ -112,7 +112,7 @@ const Nav = ({ onSearch, onLogOut, id, token }: Props) => {
                         </Link>
                         <Badge count={0}>
                             <Avatar shape="square" icon={<UserOutlined />} />
-                            {token !== null ? (
+                            {token ? (
                                 <ul>
                                     <Link href={`/contribute/${id}`}>
                                         <li>기여도</li>

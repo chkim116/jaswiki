@@ -53,7 +53,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     }, []);
 
     useEffect(() => {
-        if (user.token !== null) {
+        if (user !== null && !user.token) {
             dispatch(getAuthRequest());
         }
     }, [router]);
