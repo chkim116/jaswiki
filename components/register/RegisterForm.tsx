@@ -49,15 +49,7 @@ export const Form = styled.form`
     }
 `;
 
-export const KakaoBtn = styled.button`
-    width: 150px;
-    border: 1px solid ${(props) => props.theme.darkWhite};
-    background-color: #f1d900;
-    padding: 8px;
-    color: #391b1b;
-`;
-
-const RegisterForm = ({ onFormChange, onSubmit, onKaKaoLogin }: SignProps) => {
+const RegisterForm = ({ onFormChange, onSubmit }: SignProps) => {
     return (
         <SignContainer>
             <div>
@@ -83,9 +75,6 @@ const RegisterForm = ({ onFormChange, onSubmit, onKaKaoLogin }: SignProps) => {
                 <input type="email" name="email" placeholder="이메일" />
                 <button type="submit">Done!</button>
             </Form>
-            <KakaoBtn type="button" onClick={onKaKaoLogin}>
-                KaKaoLogin
-            </KakaoBtn>
             <Btn>
                 <Link href="/login">
                     <a>Login-{">"}</a>

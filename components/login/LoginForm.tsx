@@ -1,5 +1,5 @@
 import React from "react";
-import { SignContainer, Form, KakaoBtn } from "../register/RegisterForm";
+import { SignContainer, Form } from "../register/RegisterForm";
 import Link from "next/link";
 import styled from "@emotion/styled";
 
@@ -29,10 +29,9 @@ export const Btn = styled.div`
 export type SignProps = {
     onFormChange: (e: React.FormEvent<HTMLFormElement>) => void;
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    onKaKaoLogin?: () => void;
 };
 
-const LoginForm = ({ onFormChange, onSubmit, onKaKaoLogin }: SignProps) => {
+const LoginForm = ({ onFormChange, onSubmit }: SignProps) => {
     return (
         <SignContainer>
             <h1>로그인</h1>
@@ -45,9 +44,6 @@ const LoginForm = ({ onFormChange, onSubmit, onKaKaoLogin }: SignProps) => {
                 />
                 <button type="submit">Login</button>
             </Form>
-            <KakaoBtn type="button" onClick={onKaKaoLogin}>
-                KaKaoLogin
-            </KakaoBtn>
             <Btn>
                 <Link href="/register">
                     <a>Register-{">"}</a>

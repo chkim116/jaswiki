@@ -6,7 +6,6 @@ import { RootState } from "../../redux";
 import { loginRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/commonLoading";
 import dynamic from "next/dynamic";
-import axios from "axios";
 import Seo from "../../components/common/Seo";
 const LoginForm = dynamic(() => import("../../components/login/LoginForm"));
 
@@ -23,11 +22,6 @@ const login = () => {
         [form, dispatch]
     );
 
-    const onKaKaoLogin = useCallback(() => {
-        const kakako = async () => await axios.get("/user/kakao");
-        kakako();
-    }, []);
-
     usePush(isLogin, "/");
 
     const data = {
@@ -41,8 +35,8 @@ const login = () => {
             <Seo data={data} />
             <LoginForm
                 onFormChange={onFormChange}
-                onKaKaoLogin={onKaKaoLogin}
-                onSubmit={onSubmit}></LoginForm>
+                onSubmit={onSubmit}
+            ></LoginForm>
         </>
     );
 };

@@ -68,9 +68,10 @@ const index = ({ data }: Props) => {
             <DocsForm
                 doc={data}
                 onDelete={onDelete}
-                _id={id._id}
+                _id={id?._id}
                 node={node}
-                anchor={anchor}></DocsForm>
+                anchor={anchor}
+            ></DocsForm>
         </>
     );
 };
