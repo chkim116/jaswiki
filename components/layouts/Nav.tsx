@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import { SiJavascript } from "react-icons/si";
 import { Button, Input } from "antd";
 import { Avatar, Badge } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import { IoSearch } from "react-icons/io5";
+import { useInput } from "@cooksmelon/event";
+import { useRouter } from "next/dist/client/router";
 
 const Container = styled.div`
     width: 100%;
@@ -18,6 +21,9 @@ const Navigation = styled.header`
     margin: 0 auto;
     display: flex;
     align-items: center;
+    @media all and (max-width: ${({ theme }) => theme.desktop}) {
+        padding: 0 8px;
+    }
 `;
 
 const List = styled.div`
@@ -28,6 +34,38 @@ const List = styled.div`
 
     div:nth-of-type(2) {
         width: 350px;
+
+        @media all and (max-width: ${({ theme }) => theme.phone}) {
+            max-width: 0;
+            overflow: hidden;
+        }
+    }
+`;
+
+const SearchBtn = styled.div`
+    display: none;
+    @media all and (max-width: ${({ theme }) => theme.phone}) {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        margin-right: 5px;
+        form {
+            display: flex;
+            align-items: center;
+            input {
+                all: unset;
+                width: 200px;
+                border: 1px solid #dbdbdb;
+                padding: 5px 11px;
+                background-color: #ffffff;
+            }
+        }
+    }
+`;
+
+const WriteBtn = styled(Button)`
+    @media all and (max-width: ${({ theme }) => theme.desktop}) {
+        display: none;
     }
 `;
 
@@ -44,6 +82,7 @@ const UserBadge = styled.div`
         background: ${(props) => props.theme.white};
         padding: 0;
         margin: 0;
+        right: 0;
         position: absolute;
         width: 100px;
         display: none;
@@ -55,6 +94,7 @@ const UserBadge = styled.div`
             border: 1px solid ${(props) => props.theme.darkWhite};
             padding: 10px;
             margin: 0;
+
             &:hover {
                 background-color: #ededed;
             }
@@ -84,6 +124,23 @@ type Props = {
 };
 
 const Nav = ({ onSearch, onLogOut, id, token }: Props) => {
+    const [text, onChange, setText] = useInput("");
+    const router = useRouter();
+
+    const onSubmit = useCallback(() => {
+        router.push(`/search?q=${text}`);
+        setText(() => "");
+    }, [text]);
+
+    const onFormSubmit = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            router.push(`/search?q=${text}`);
+            setText(() => "");
+        },
+        [text]
+    );
+
     return (
         <Container>
             <Navigation>
@@ -91,7 +148,7 @@ const Nav = ({ onSearch, onLogOut, id, token }: Props) => {
                     <Link href="/">
                         <div>
                             <SiJavascript
-                                size={54}
+                                size={44}
                                 style={{ cursor: "pointer" }}
                                 fill="#f1d900"
                             />
@@ -105,15 +162,31 @@ const Nav = ({ onSearch, onLogOut, id, token }: Props) => {
                             enterButton
                         />
                     </div>
+                    <SearchBtn>
+                        <form onSubmit={onFormSubmit}>
+                            <input
+                                onChange={onChange}
+                                type="text"
+                                value={text}
+                                placeholder="다양한 예제들을 검색하세요"
+                            />
+                            <Button type="primary" onClick={onSubmit}>
+                                <IoSearch size={20} color="#ffffff" />
+                            </Button>
+                        </form>
+                    </SearchBtn>
 
                     <UserBadge>
                         <Link href="/write">
-                            <Button type="primary">문서작성</Button>
+                            <WriteBtn type="primary">문서작성</WriteBtn>
                         </Link>
                         <Badge count={0}>
                             <Avatar shape="square" icon={<UserOutlined />} />
                             {token ? (
                                 <ul>
+                                    <Link href={`/write`}>
+                                        <li>문서 작성</li>
+                                    </Link>
                                     <Link href={`/contribute/${id}`}>
                                         <li>기여도</li>
                                     </Link>

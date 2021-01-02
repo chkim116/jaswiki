@@ -11,6 +11,10 @@ const SearchContainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
     margin: 0 auto;
     min-height: 80vh;
+
+    @media all and (max-width: ${(props) => props.theme.desktop}) {
+        padding: 5px 8px;
+    }
 `;
 
 const IsSearchTitle = styled.h3`

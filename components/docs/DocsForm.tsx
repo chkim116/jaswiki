@@ -16,7 +16,7 @@ const DocsContainer = styled.div`
     margin: 0 auto;
 
     @media all and (max-width: ${(props) => props.theme.desktop}) {
-        padding: 5px;
+        padding: 5px 8px;
     }
 `;
 
@@ -28,6 +28,11 @@ const StackDetail = styled.div`
     margin-bottom: 36px;
     span {
         margin: 0 3px;
+    }
+    @media all and (max-width: ${({ theme }) => theme.phone}) {
+        span {
+            display: none;
+        }
     }
 `;
 
@@ -46,6 +51,9 @@ const DocsDesc = styled.div`
             color: ${(props) => props.theme.link};
             margin-right: 8px;
         }
+    }
+    @media all and (max-width: ${({ theme }) => theme.phone}) {
+        flex-direction: row-reverse;
     }
 `;
 
@@ -88,10 +96,8 @@ const DocsForm = ({ doc, _id, onDelete, anchor, node }: Props) => {
     return (
         <>
             <DocsContainer>
-                <Title>
-                    {doc.title}
-                    <StackComponent stack={doc.stack} />
-                </Title>
+                <Title>{doc.title}</Title>
+                <StackComponent stack={doc.stack} />
                 <StackDetail>
                     <div>
                         <span>이 문서는</span>
@@ -116,7 +122,8 @@ const DocsForm = ({ doc, _id, onDelete, anchor, node }: Props) => {
                                             style={{ color: "red" }}
                                         />
                                     }
-                                    onConfirm={onDelete}>
+                                    onConfirm={onDelete}
+                                >
                                     <Del href="#">삭제</Del>
                                 </Popconfirm>
                             )}

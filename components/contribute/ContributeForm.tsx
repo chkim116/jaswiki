@@ -11,7 +11,7 @@ const Container = styled.div`
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 5px;
+    padding: 0 8px;
 `;
 
 const UserInfo = styled.div`
