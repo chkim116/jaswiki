@@ -15,7 +15,7 @@ const AboutCotainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
     margin: 0 auto;
     @media all and (max-width: ${(props) => props.theme.desktop}) {
-        padding: 5px;
+        padding: 5px 8px;
     }
 `;
 
@@ -45,7 +45,8 @@ const AboutForm = () => {
                         <Anchor.Link href="#WHY?" title="WHY?"></Anchor.Link>
                         <Anchor.Link
                             href="#NextPlan"
-                            title="NextPlan"></Anchor.Link>
+                            title="NextPlan"
+                        ></Anchor.Link>
                     </BookAnchor>
                 </ContentDesc>
 

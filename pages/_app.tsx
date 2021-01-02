@@ -15,7 +15,7 @@ import styled from "@emotion/styled";
 import Axios from "axios";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { BsArrow90DegUp, BsArrowBarUp, BsArrowUp } from "react-icons/bs";
+import { BsArrowUp } from "react-icons/bs";
 const Nav = dynamic(() => import("../components/layouts/Nav"), { ssr: false });
 const Footer = dynamic(() => import("../components/layouts/Footer"));
 
@@ -79,7 +79,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 ? setShowing(() => true)
                 : setShowing(() => false)
         );
-    }, [window.scrollY]);
+    }, [process.browser && window?.scrollY]);
 
     const onScroll = useCallback(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
