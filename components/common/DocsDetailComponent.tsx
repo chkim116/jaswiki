@@ -57,6 +57,10 @@ export const ContentDetail = styled.div`
             left: 0;
             border-bottom: 2px solid ${(props) => props.theme.darkWhite};
         }
+
+        @media all and (max-width: ${({ theme }) => theme.desktop}) {
+            letter-spacing: -3px;
+        }
     }
 
     blockquote {
@@ -85,6 +89,10 @@ export const ContentDetail = styled.div`
         display: block;
         margin: 30px auto;
     }
+
+    @media all and (max-width: ${({ theme }) => theme.desktop}) {
+        font-size: 1rem;
+    }
 `;
 
 type Props = {
@@ -104,7 +112,8 @@ const DocsDetailComponent = ({ content, description, anchor, node }: Props) => {
                             /(?:\r\n|\r|\n)/g,
                             "<br />"
                         ),
-                    }}></p>
+                    }}
+                ></p>
                 {anchor && (
                     <BookAnchor affix={false}>
                         <LinkTitle>목차</LinkTitle>
@@ -118,7 +127,8 @@ const DocsDetailComponent = ({ content, description, anchor, node }: Props) => {
                                     )
                                     .replace(/ /g, "-")
                                     .toLowerCase()}`}
-                                title={useReplace(word)}></Anchor.Link>
+                                title={useReplace(word)}
+                            ></Anchor.Link>
                         ))}
                     </BookAnchor>
                 )}
@@ -126,7 +136,8 @@ const DocsDetailComponent = ({ content, description, anchor, node }: Props) => {
 
             <ContentDetail
                 ref={node}
-                dangerouslySetInnerHTML={{ __html: content }}></ContentDetail>
+                dangerouslySetInnerHTML={{ __html: content }}
+            ></ContentDetail>
         </Content>
     );
 };

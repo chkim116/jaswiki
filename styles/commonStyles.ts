@@ -7,15 +7,14 @@ export const Wrapper = styled.main`
 export const Title = styled.h1`
     margin: 20px 0;
     padding-bottom: 12px;
-
     border-bottom: 2px solid ${(props) => props.theme.darkWhite};
     position: relative;
+    letter-spacing: -2px;
     font-size: 38px;
-    span {
-        font-size: ${(props) => props.theme.ms};
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
+
+    @media all and (max-width: ${({ theme }) => theme.desktop}) {
+        font-size: 30px;
+        letter-spacing: -3px;
     }
 `;
 
@@ -30,5 +29,8 @@ export const DetailTitle = styled.h1`
         bottom: 0px;
         left: 0;
         border-bottom: 2px solid ${(props) => props.theme.darkWhite};
+    }
+    @media all and (max-width: ${({ theme }) => theme.desktop}) {
+        letter-spacing: -3px;
     }
 `;

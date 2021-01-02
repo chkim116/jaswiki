@@ -12,6 +12,9 @@ const Container = styled.div`
         margin: 0;
         list-style: none;
     }
+    @media all and (max-width: ${(props) => props.theme.desktop}) {
+        padding: 5px 8px;
+    }
 `;
 
 const LevelDesc = styled.li`
