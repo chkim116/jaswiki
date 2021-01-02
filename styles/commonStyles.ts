@@ -2,6 +2,11 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.main`
     width: 100%;
+
+    @media all and (max-width: ${({ theme }) => theme.desktop}) {
+        width: 96%;
+        margin: 0 auto;
+    }
 `;
 
 export const Title = styled.h1`
