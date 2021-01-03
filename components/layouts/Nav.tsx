@@ -146,13 +146,15 @@ const Nav = ({ onSearch, onLogOut, id, token }: Props) => {
             <Navigation>
                 <List>
                     <Link href="/">
-                        <div>
-                            <SiJavascript
-                                size={44}
-                                style={{ cursor: "pointer" }}
-                                fill="#f1d900"
-                            />
-                        </div>
+                        <a>
+                            <div>
+                                <SiJavascript
+                                    size={44}
+                                    style={{ cursor: "pointer" }}
+                                    fill="#f1d900"
+                                />
+                            </div>
+                        </a>
                     </Link>
                     <div>
                         <Input.Search
@@ -178,7 +180,9 @@ const Nav = ({ onSearch, onLogOut, id, token }: Props) => {
 
                     <UserBadge>
                         <Link href="/write">
-                            <WriteBtn type="primary">문서작성</WriteBtn>
+                            <a>
+                                <WriteBtn type="primary">문서작성</WriteBtn>
+                            </a>
                         </Link>
                         <Badge count={0}>
                             <Avatar shape="square" icon={<UserOutlined />} />

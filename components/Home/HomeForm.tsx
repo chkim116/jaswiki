@@ -45,6 +45,7 @@ const NewFeed = styled.ul`
     li {
         margin: 5px 0;
         width: fit-content;
+        letter-spacing: -1px;
         cursor: pointer;
         &:hover {
             text-decoration: underline;
@@ -91,7 +92,11 @@ const HomeForm = ({ docs, isDone }: Props) => {
             <NewFeed>
                 {isDone ? (
                     docs.map((doc) => (
-                        <Link key={doc._id} href={`/docs/${doc._id}`}>
+                        <Link
+                            key={doc._id}
+                            href={`/docs/${doc._id}`}
+                            shallow={true}
+                        >
                             <li>
                                 {doc.title}
                                 <StackComponent stack={doc.stack} size={12} />

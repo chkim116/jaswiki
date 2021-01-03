@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux";
 import { getAuthRequest, logoutRequest } from "../redux/auth";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { message, Spin } from "antd";
 import styled from "@emotion/styled";
 import Axios from "axios";
 import dynamic from "next/dynamic";
@@ -65,7 +65,11 @@ const App = ({ Component, pageProps }: AppProps) => {
     const dispatch = useDispatch();
 
     const onSearch = useCallback((v, e) => {
-        router.push(`/search?q=${v}`);
+        if (v) {
+            router.push(`/search?q=${v}`);
+        } else {
+            return message.info("검색어를 입력해 주세요");
+        }
     }, []);
 
     const onLogOut = useCallback(() => {
@@ -73,13 +77,16 @@ const App = ({ Component, pageProps }: AppProps) => {
         router.push("/");
     }, []);
 
+    const onScrollY = useCallback(() => {
+        window.scrollY > 100 ? setShowing(() => true) : setShowing(() => false);
+    }, []);
+
     useEffect(() => {
-        window.addEventListener("scroll", () =>
-            window.scrollY > 100
-                ? setShowing(() => true)
-                : setShowing(() => false)
-        );
-    }, [process.browser && window?.scrollY]);
+        window.addEventListener("scroll", onScrollY);
+        return () => {
+            window.removeEventListener("scroll", onScrollY);
+        };
+    }, []);
 
     const onScroll = useCallback(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -96,7 +103,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     return (
         <ThemeProvider theme={theme}>
             <Head>
-                <link rel="icon" type="image/png" href="/public/favicon.png" />
+                <link rel="icon" type="image/png" href="/public/favicon.ico" />
             </Head>
             <Wrapper>
                 {isCommonLoading && (

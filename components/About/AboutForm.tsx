@@ -14,6 +14,13 @@ const AboutCotainer = styled.div`
     padding-bottom: 120px;
     max-width: ${(props) => props.theme.maxWidth};
     margin: 0 auto;
+
+    & > div:nth-of-type(1) {
+        div {
+            text-align: right;
+        }
+    }
+
     @media all and (max-width: ${(props) => props.theme.desktop}) {
         padding: 5px 8px;
     }
@@ -23,10 +30,8 @@ const AboutForm = () => {
     return (
         <AboutCotainer>
             <div>
-                <Title>
-                    자스위키란?
-                    <span>🔐</span>
-                </Title>
+                <Title>자스위키란?</Title>
+                <div>🔐</div>
             </div>
             <div>
                 <ContentDesc>

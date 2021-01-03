@@ -14,6 +14,7 @@ const Toolbar = styled.div`
     position: sticky;
     top: 0;
     z-index: 55;
+    flex-wrap: wrap;
     background-color: ${(props) => props.theme.white};
     button {
         &:nth-of-type(odd) {
@@ -61,21 +62,19 @@ const ToolbarComponent = ({ onHeader, onClickImg }: Props) => {
                 type="button"
                 data-toolbar="**"
                 data-lnline="true"
-                onClick={onHeader}>
+                onClick={onHeader}
+            >
                 <strong>B</strong>
             </button>
             <button
                 type="button"
                 data-toolbar="_"
                 data-lnline="true"
-                onClick={onHeader}>
+                onClick={onHeader}
+            >
                 <BsTypeItalic />
             </button>
-            <button
-                type="button"
-                data-toolbar="```"
-                data-lnline="true"
-                onClick={onHeader}>
+            <button type="button" data-toolbar="```" onClick={onHeader}>
                 <IoCodeWorkingOutline />
             </button>
 
@@ -99,7 +98,8 @@ const ToolbarComponent = ({ onHeader, onClickImg }: Props) => {
                 accept="image/*"
                 hidden
                 ref={imgInput}
-                onChange={onClickImg}></input>
+                onChange={onClickImg}
+            ></input>
         </Toolbar>
     );
 };

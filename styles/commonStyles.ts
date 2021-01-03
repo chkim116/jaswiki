@@ -21,6 +21,7 @@ export const Title = styled.h1`
 export const DetailTitle = styled.h1`
     position: relative;
     padding-bottom: 12px;
+    letter-spacing: -2px;
     &:after {
         width: 30px;
         height: 1px;

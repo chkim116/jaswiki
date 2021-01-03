@@ -1,25 +1,24 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { ContentDetail } from "../common/DocsDetailComponent";
-import { Select } from "antd";
+import { message, Select } from "antd";
 import { SelectValue } from "antd/lib/select";
 const { Option } = Select;
 import ToolbarComponent from "./ToolbarComponent";
-import { useInput } from "@cooksmelon/event";
+import { useInput, useToggle } from "@cooksmelon/event";
 import { useDispatch, useSelector } from "react-redux";
 import { loadRequest } from "../../redux/commonLoading";
 import { updateRequest, WriteRequest } from "../../redux/write";
 import { usePush } from "../../hook";
 import { RootState } from "../../redux";
-import { doc } from "../../@types/type";
+import { doc, user } from "../../@types/type";
 import { stackList } from "../../lib/stackList";
 import marked from "marked";
 import Axios from "axios";
 import { addMark } from "../../lib/toolbar";
 
 const WriteContainer = styled.div`
-    width: 100%;
-    max-width: 1400px;
+    width: 98%;
     margin: 36px auto;
     padding: 0 3px;
     display: flex;
@@ -46,6 +45,7 @@ const Description = styled.textarea`
     width: 100%;
     border: 1px solid ${(props) => props.theme.darkWhite};
     padding: 10px;
+    height: 100px;
     resize: none;
     outline: none;
 `;
@@ -53,6 +53,7 @@ const Description = styled.textarea`
 const Editor = styled.textarea`
     min-height: 600px;
     width: 100%;
+    max-height: 990px;
     border: 1px solid ${(props) => props.theme.darkWhite};
     padding: 10px;
     resize: none;
@@ -62,6 +63,11 @@ const Editor = styled.textarea`
 const Preview = styled.div`
     overflow: auto;
     margin-left: 3px;
+    width: 50%;
+    max-height: 990px;
+    min-height: 600px;
+    border: 1px solid #dbdbdb;
+    padding: 10px;
     ::-webkit-scrollbar {
         width: 5.2px;
     }
@@ -79,40 +85,46 @@ const Preview = styled.div`
         border-bottom: 1px solid ${(props) => props.theme.darkWhite};
         font-size: 38px;
     }
-    width: 50%;
-    max-height: 990px;
-    min-height: 600px;
-    border: 1px solid #dbdbdb;
-    padding: 10px;
 
     img {
         display: block;
-        width: 100%;
+        max-width: 100%;
         margin: 30px auto;
     }
     @media all and (max-width: ${(props) => props.theme.desktop}) {
         display: none;
     }
+
+    pre {
+        margin: 8px 0;
+    }
 `;
 
-const DocsBtn = styled.div`
+const DocsBtn = styled.div<{ secret?: boolean }>`
     display: flex;
     justify-content: center;
     margin-bottom: 36px;
     button {
-        width: 150px;
+        width: 100px;
+        margin: 4px;
         text-align: center;
         background-color: ${(props) => props.theme.green};
         padding: 8px;
         color: ${(props) => props.theme.white};
         border-radius: 8px;
+
+        &:nth-of-type(2) {
+            background-color: ${({ theme, secret }) =>
+                secret ? theme.blue : theme.white};
+            color: ${({ theme, secret }) =>
+                secret ? theme.white : theme.black};
+            border: 1px solid ${({ theme }) => theme.darkWhite};
+        }
     }
 `;
 
 const SelectStack = styled(Select)`
     width: 100%;
-    & > div {
-    }
 `;
 
 type Props = {
@@ -131,8 +143,11 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
     const [endText, setEndText] = useState<number>(0);
     const [isSubmit, setIsSubmit] = useState(false);
     const [title, onChangeTitle] = useInput(doc?.title ? doc.title : "");
+    const [secret, onSecret] = useToggle(false);
     const dispatch = useDispatch();
-    const { user } = useSelector((state: RootState) => state.auth);
+    const { user }: { user: user } = useSelector(
+        (state: RootState) => state.auth
+    );
     const { isDone, detailRouter } = useSelector(
         (state: RootState) => state.write
     );
@@ -233,12 +248,9 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
     );
 
     // 스택 선택시
-    const onStack = useCallback(
-        (v: SelectValue & any) => {
-            setStack(() => v);
-        },
-        [stack]
-    );
+    const onStack = useCallback((v: SelectValue & any) => {
+        setStack(() => v);
+    }, []);
 
     // 제출 시 텍스트를 html로 파싱하여 제출합니다.
     const onSubmit = useCallback(() => {
@@ -248,6 +260,7 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
             content: text,
             creator: user._id ? user._id : "",
             stack,
+            secret,
         };
         setIsSubmit(() => true);
         if (!isEdit) {
@@ -256,7 +269,14 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
             dispatch(updateRequest({ ...submit, id: route }));
         }
         dispatch(loadRequest());
-    }, [text, title, desc, stack, user, detailRouter]);
+    }, [text, title, desc, stack, user, detailRouter, secret]);
+
+    // 보안할 시, 안내창
+    useEffect(() => {
+        if (secret) {
+            message.success("체크했습니다.");
+        }
+    }, [secret]);
 
     // 글작성완료시 디테일페이지로이동`
     if (!isEdit) {
@@ -273,12 +293,15 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
                         onChange={onChangeTitle}
                         type="text"
                         value={title}
+                        required
                         placeholder="문서의 제목을 입력하세요."
                     />
                     <Description
                         value={desc}
                         onChange={onChangeDesc}
-                        placeholder="문서의 설명을 입력하세요."></Description>
+                        required
+                        placeholder="문서의 설명을 입력하세요."
+                    ></Description>
                     <ToolbarComponent
                         onHeader={onHeader}
                         onClickImg={onClickImg}
@@ -290,12 +313,14 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
                         onSelect={onSelect}
                         ref={editor}
                         value={text}
-                        onChange={onChange}></Editor>
+                        onChange={onChange}
+                    ></Editor>
                     <SelectStack
                         mode="multiple"
                         placeholder="Stack"
                         onChange={onStack}
-                        optionLabelProp="label">
+                        optionLabelProp="label"
+                    >
                         {stackList.map((stack) => (
                             <Option value={stack.value} label={stack.label}>
                                 <div>
@@ -313,14 +338,26 @@ const WriteForm = ({ isEdit, doc, route }: Props) => {
                     <ContentDetail
                         dangerouslySetInnerHTML={{
                             __html: marked(text),
-                        }}></ContentDetail>
+                        }}
+                    ></ContentDetail>
                 </Preview>
             </WriteContainer>
 
-            <DocsBtn>
+            <DocsBtn secret={secret}>
                 <button type="submit" onClick={onSubmit}>
                     문서 등록
                 </button>
+                {isEdit ? (
+                    doc?.creator._id === user?._id && (
+                        <button type="button" onClick={onSecret}>
+                            {secret ? "보안✔️" : "보안❌"}
+                        </button>
+                    )
+                ) : (
+                    <button type="button" onClick={onSecret}>
+                        {secret ? "보안✔️" : "보안❌"}
+                    </button>
+                )}
             </DocsBtn>
         </>
     );

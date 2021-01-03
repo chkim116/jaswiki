@@ -18,6 +18,7 @@ export const ContentDesc = styled.div`
 export const BookAnchor = styled(Anchor)`
     min-width: 300px;
     max-width: 300px;
+    letter-spacing: -1px;
     padding: 0;
     margin-bottom: 36px;
     @media all and (max-width: ${(props) => props.theme.desktop}) {
@@ -41,8 +42,8 @@ export const ContentDetail = styled.div`
     min-height: 300px;
     font-size: 1.125rem;
     line-height: 1.7;
-    letter-spacing: -0.004em;
     word-break: keep-all;
+    letter-spacing: -2px;
     overflow-wrap: break-word;
     h1 {
         position: relative;
@@ -75,7 +76,7 @@ export const ContentDetail = styled.div`
         background-color: #fafbfc;
         overflow: auto;
         padding: 8px;
-        margin: 5px 0;
+        margin: 8px 0;
     }
 
     a {

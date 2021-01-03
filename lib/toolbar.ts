@@ -9,59 +9,59 @@ export const addMark = (
     const startText = text.slice(0, start);
     const curText = text.slice(start, end);
     const restText = text.slice(end, text.length);
+    const insideText = (curText: string) => `${startText}${curText}${restText}`;
 
-    if (toolbar === "img") {
-        console.log(img);
-        const newText = `${startText}\n![](${img})\n${curText}${restText}`;
-        return newText;
-    }
-    // 툴바가 헤더일시
-    if (toolbar.includes("#")) {
-        const newText = `${startText} ${toolbar} ${curText}${restText}`;
-        return newText;
-    }
-
-    // 툴바가 링크일시
-    if (toolbar.includes("[]()")) {
-        if (curText === "") {
-            const newText = `${startText}${toolbar}${restText}`;
+    let newText;
+    switch (toolbar) {
+        case "img": {
+            newText = insideText(`\n![](${img})\n`);
             return newText;
         }
-        const newText = `${startText}[](${curText})${restText}`;
-        return newText;
-    }
-
-    // 툴바가 인라인 일시
-    if (inline) {
-        // 인라인인데, 선택한 텍스트가 없을 시
-        if (curText === "") {
-            // 만약 선택한 값이 없는데, 툴바가 ```라면 실행.
-            const newText = `${startText}${
-                toolbar === "```" ? `${toolbar}js ` : toolbar
-            }입력${toolbar}${restText}`;
+        case "#": {
+            curText
+                ? (newText = insideText(`${toolbar} ${curText}`))
+                : (newText = insideText(`${toolbar} `));
             return newText;
         }
-        // 만약 툴바가 ```라면 js를 넣어 변환
-        if (toolbar === "```") {
-            const newText = `${startText}${toolbar}js\n${curText}\n${toolbar}${restText}`;
+        case "[]()": {
+            curText
+                ? (newText = insideText(`[](${curText})`))
+                : (newText = insideText(`${toolbar}`));
             return newText;
         }
-        // 인라인인데, 선택한 텍스트가 있을 때
-        const newText = `${startText} ${toolbar}${curText}${toolbar} ${restText}`;
-        return newText;
-    } else {
-        // 툴바가 리스트고, > 일때
-        if (toolbar === "-" || toolbar.includes(">")) {
-            if (curText) {
-                const newText = `${startText}\n${toolbar} ${curText}\n${restText}`;
+        case "```": {
+            curText
+                ? (newText = insideText(`${toolbar}js\n${curText}\n${toolbar}`))
+                : (newText = insideText(`\n${toolbar}js\n${toolbar}`));
+            return newText;
+        }
+        case ">": {
+            curText
+                ? (newText = insideText(`${toolbar} ${curText} \n`))
+                : (newText = insideText(`${toolbar} \n`));
+            return newText;
+        }
+        case "---": {
+            newText = insideText(`\n${toolbar}\n`);
+            return newText;
+        }
+        case "-": {
+            curText
+                ? (newText = insideText(`${toolbar} ${curText} \n`))
+                : (newText = insideText(`${toolbar} \n`));
+        }
+        default: {
+            if (inline) {
+                curText
+                    ? (newText = insideText(`${toolbar}${curText}${toolbar}`))
+                    : (newText = insideText(`${toolbar} ${toolbar}`));
+                return newText;
+            } else {
+                curText
+                    ? (newText = insideText(`${toolbar}${curText}`))
+                    : (newText = insideText(`${toolbar} `));
                 return newText;
             }
-
-            const newText = `${startText}\n${toolbar}\n${restText}`;
-            return newText;
         }
-        // 툴바가 이미지도, 헤더도, 인라인도 아닐시
-        const newText = `${startText}${curText}\n${toolbar}\n${restText}`;
-        return newText;
     }
 };

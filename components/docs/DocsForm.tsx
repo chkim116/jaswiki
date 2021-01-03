@@ -2,13 +2,20 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Title } from "../../styles/commonStyles";
 import Link from "next/link";
-import DocsDetailComponent from "../common/DocsDetailComponent";
 import { doc } from "../../@types/type";
 import StackComponent from "../common/StackComponent";
 import { levelIconChange } from "../../lib/levelChange";
 import { Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import marked from "marked";
+import dynamic from "next/dynamic";
+import DocsSkeleton from "../common/skeleton/DocsSkeleton";
+const DocsDetailComponent = dynamic(
+    () => import("../common/DocsDetailComponent"),
+    {
+        loading: () => <DocsSkeleton />,
+    }
+);
 
 const DocsContainer = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
@@ -107,7 +114,16 @@ const DocsForm = ({ doc, _id, onDelete, anchor, node }: Props) => {
                     <DocsDesc>
                         <div>
                             {doc.secret ? (
-                                "🔐"
+                                doc.creator._id === _id ? (
+                                    <>
+                                        🔐
+                                        <Link href={`/edit/${doc._id}`}>
+                                            <a>편집</a>
+                                        </Link>
+                                    </>
+                                ) : (
+                                    "🔐"
+                                )
                             ) : (
                                 <Link href={`/edit/${doc._id}`}>
                                     <a>편집</a>
