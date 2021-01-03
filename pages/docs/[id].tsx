@@ -12,6 +12,7 @@ import Seo from "../../components/common/Seo";
 import { GetServerSideProps } from "next";
 import DocsSkeleton from "../../components/common/skeleton/DocsSkeleton";
 import useSWR from "swr";
+import { doc } from "../../@types/type";
 const DocsForm = dynamic(() => import("../../components/docs/DocsForm"), {
     loading: () => <DocsSkeleton />,
 });
@@ -21,12 +22,12 @@ const fetcher = (url: string) => {
 };
 
 type Props = {
-    docData: any;
+    docData: doc[];
+    anchor: string[];
 };
 
-const index = ({ docData }: Props) => {
+const index = ({ docData, anchor }: Props) => {
     const id = useSelector((state: RootState) => state.auth.user);
-    const [anchor, setAnchor] = useState<string[]>([]);
     const router = useRouter();
     const dispatch = useDispatch();
     const node = useRef<any>(null);
@@ -37,14 +38,8 @@ const index = ({ docData }: Props) => {
 
     // 수정 시를 위해 리덕스에 저장
     useEffect(() => {
-        if (data) {
-            const html = marked(data.content);
-            // 앵커 등록을 위한 replace
-            const head = html.match(
-                /<([h][1])[^>]*>[ㄱ-ㅎ\ㅏ-ㅣ\가-힣\w\s\.\!\@\#\$\%\^\&\*\(\)\-\=\+\_\?\,\;\"\'\|\/\~']+<\/\1>/g
-            ) as string[];
-            setAnchor(head);
-            dispatch(getDocById(data));
+        if (docData) {
+            dispatch(getDocById(docData));
         }
     }, []);
 
@@ -83,7 +78,12 @@ const index = ({ docData }: Props) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const docData = await fetcher(`/docs/${ctx.query.id}`);
-    return { props: { docData } };
+    const html = marked(docData.content);
+    // 앵커 등록을 위한 replace
+    const anchor = html.match(
+        /<([h][1])[^>]*>[ㄱ-ㅎ\ㅏ-ㅣ\가-힣\w\s\.\!\@\#\$\%\^\&\*\(\)\-\=\+\_\?\,\;\"\'\|\/\~']+<\/\1>/g
+    ) as string[];
+    return { props: { docData, anchor } };
 };
 
 export default index;
