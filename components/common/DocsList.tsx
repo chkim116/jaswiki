@@ -12,7 +12,7 @@ const DocsListContent = styled.div`
     a {
         color: ${(props) => props.theme.link};
         font-weight: 600;
-        letter-spacing: -1.5px;
+        letter-spacing: -0.2px;
         font-size: ${(props) => props.theme.ls};
         &:hover {
             color: #1890ff;

@@ -45,7 +45,7 @@ const NewFeed = styled.ul`
     li {
         margin: 5px 0;
         width: fit-content;
-        letter-spacing: -1px;
+        letter-spacing: -0.2px;
         cursor: pointer;
         &:hover {
             text-decoration: underline;

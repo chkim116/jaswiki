@@ -31,14 +31,13 @@ const List = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`;
 
-    div:nth-of-type(2) {
-        width: 350px;
+const SearchDeskTop = styled.div`
+    width: 350px;
 
-        @media all and (max-width: ${({ theme }) => theme.phone}) {
-            max-width: 0;
-            overflow: hidden;
-        }
+    @media all and (max-width: ${({ theme }) => theme.phone}) {
+        display: none;
     }
 `;
 
@@ -156,14 +155,14 @@ const Nav = ({ onSearch, onLogOut, id, token }: Props) => {
                             </div>
                         </a>
                     </Link>
-                    <div>
+                    <SearchDeskTop>
                         <Input.Search
                             onSearch={onSearch}
                             size="large"
                             placeholder="다양한 예제들을 검색하세요"
                             enterButton
                         />
-                    </div>
+                    </SearchDeskTop>
                     <SearchBtn>
                         <form onSubmit={onFormSubmit}>
                             <input

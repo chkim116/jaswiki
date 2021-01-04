@@ -1,10 +1,33 @@
 @import "~antd/dist/antd.css";
 @import url("https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap");
+@font-face {
+    font-family: "NanumBarunGothic";
+    font-style: normal;
+    font-weight: 400;
+    src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot");
+    src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix")
+            format("embedded-opentype"),
+        url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff")
+            format("woff"),
+        url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf")
+            format("truetype");
+}
+@font-face {
+    font-family: "NanumBarunGothic";
+    font-style: normal;
+    font-weight: 700;
+    src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot");
+    src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix")
+            format("embedded-opentype"),
+        url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff")
+            format("woff"),
+        url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf")
+            format("truetype");
+}
 
 * {
     box-sizing: border-box;
     --webkit-font-smoothing: antialiased;
-    font-family: "Fira Mono", monospace;
     font-weight: 500;
 }
 
@@ -12,15 +35,12 @@ html,
 body {
     padding: 0;
     color: #333;
+    font-family: "NanumBarunGothic", sans-serif;
     margin: 0;
 }
 
 p {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-        "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", 나눔고딕,
-        "Nanum Gothic", "Noto Sans KR", "Noto Sans CJK KR", arial, 돋움, Dotum,
-        Tahoma, Geneva, sans-serif;
 }
 
 button {
@@ -36,6 +56,7 @@ h1,
 h2,
 h3 {
     font-weight: 600;
+    letter-spacing: -0.2px;
 }
 
 .hljs-keyword {
